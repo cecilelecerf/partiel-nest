@@ -1,11 +1,14 @@
 import { PrismaClient } from '../src/generated/prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { hash } from 'bcrypt';
 import 'dotenv/config';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const password = await hash('Password123!', 10);
+
   // Nettoyer la DB
   await prisma.post.deleteMany();
   await prisma.user.deleteMany();
@@ -14,7 +17,7 @@ async function main() {
   const alice = await prisma.user.create({
     data: {
       email: 'alice@example.com',
-      password: 'hashed_password_1',
+      password,
       name: 'Alice',
       posts: {
         create: [
@@ -36,7 +39,7 @@ async function main() {
   const bob = await prisma.user.create({
     data: {
       email: 'bob@example.com',
-      password: 'hashed_password_2',
+      password,
       name: 'Bob',
       posts: {
         create: [
