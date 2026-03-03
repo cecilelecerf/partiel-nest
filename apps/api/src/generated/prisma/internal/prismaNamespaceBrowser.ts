@@ -76,6 +76,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
+  isVerifiedEmail: 'isVerifiedEmail',
   otpCode: 'otpCode',
   otpExpiredAt: 'otpExpiredAt'
 } as const
