@@ -9,6 +9,10 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from 'src/generated/prisma/client';
+import { LoginUserDto } from 'src/users/dto/loginUser.dto';
+import { VerifyOtpDto } from 'src/auth/dto/verifyOtp.dto';
+import { CreateUserDto } from 'src/users/dto/createUser.dto';
+import { VerifyEmailDto } from './dto/verifyEmail.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -16,29 +20,25 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  signIn(@Body() signInDto: LoginUserDto) {
+    return this.authService.signIn({ ...signInDto });
   }
 
   @Post('verify')
-  verify(@Body() verifyInDto: Record<string, any>) {
-    return this.authService.verifyOtp(verifyInDto.otp);
+  verify(@Body() verifyInDto: VerifyOtpDto) {
+    return this.authService.verifyOtp({ ...verifyInDto });
   }
 
   @Post('registry')
   registry(
     @Body()
-    registryInDto: {
-      email: User['email'];
-      password: User['password'];
-      name: User['name'];
-    },
+    registryInDto: CreateUserDto,
   ) {
     return this.authService.registry({ ...registryInDto });
   }
 
   @Get('verify-email')
-  verifyEmail(@Query('token') token: string) {
-    return this.authService.verifyEmail(token);
+  verifyEmail(@Query('token') token: VerifyEmailDto) {
+    return this.authService.verifyEmail({ ...token });
   }
 }
