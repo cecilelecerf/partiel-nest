@@ -11,17 +11,14 @@ import {
 import { TrainingsService } from './trainings.service';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
-import { JwtGuard } from 'src/auth/guards/jwt.guard';
-import { RolesGuard } from 'src/auth/guards/role.guard';
 import { Role, Roles } from 'src/auth/decorators/roles.decorator';
 
-@UseGuards(JwtGuard, RolesGuard)
 @Controller('trainings')
 export class TrainingsController {
   constructor(private readonly trainingsService: TrainingsService) {}
 
-  @Post()
   @Roles(Role.ADMIN)
+  @Post()
   create(@Body() createTrainingDto: CreateTrainingDto) {
     return this.trainingsService.create(createTrainingDto);
   }
@@ -36,8 +33,8 @@ export class TrainingsController {
     return this.trainingsService.findOne(+id);
   }
 
-  @Patch(':id')
   @Roles(Role.ADMIN)
+  @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateTrainingDto: UpdateTrainingDto,
@@ -45,8 +42,8 @@ export class TrainingsController {
     return this.trainingsService.update(+id, updateTrainingDto);
   }
 
-  @Delete(':id')
   @Roles(Role.ADMIN)
+  @Delete(':id')
   remove(@Param('id') id: string) {
     return this.trainingsService.remove(+id);
   }

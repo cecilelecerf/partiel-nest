@@ -12,7 +12,9 @@ import { LoginUserDto } from 'src/users/dto/loginUser.dto';
 import { VerifyOtpDto } from 'src/auth/dto/verifyOtp.dto';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { VerifyEmailDto } from './dto/verifyEmail.dto';
+import { Public } from './decorators/public.decorator';
 
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}

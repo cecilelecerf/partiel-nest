@@ -23,6 +23,7 @@ async function main() {
       password,
       name: 'User',
       role: 'USER',
+      isVerifiedEmail: true,
     },
   });
   const alice = await prisma.user.create({

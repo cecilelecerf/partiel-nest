@@ -333,7 +333,7 @@ export type UserCreateInput = {
   otpExpiredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: $Enums.UserRole
+  role?: $Enums.UserRole
   userTrainings?: Prisma.UserTrainingCreateNestedManyWithoutUserInput
 }
 
@@ -347,7 +347,7 @@ export type UserUncheckedCreateInput = {
   otpExpiredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: $Enums.UserRole
+  role?: $Enums.UserRole
   userTrainings?: Prisma.UserTrainingUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -388,7 +388,7 @@ export type UserCreateManyInput = {
   otpExpiredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: $Enums.UserRole
+  role?: $Enums.UserRole
 }
 
 export type UserUpdateManyMutationInput = {
@@ -523,7 +523,7 @@ export type UserCreateWithoutUserTrainingsInput = {
   otpExpiredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: $Enums.UserRole
+  role?: $Enums.UserRole
 }
 
 export type UserUncheckedCreateWithoutUserTrainingsInput = {
@@ -536,7 +536,7 @@ export type UserUncheckedCreateWithoutUserTrainingsInput = {
   otpExpiredAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  role: $Enums.UserRole
+  role?: $Enums.UserRole
 }
 
 export type UserCreateOrConnectWithoutUserTrainingsInput = {

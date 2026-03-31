@@ -21,10 +21,13 @@ export class AuthService {
     return randomInt(100000, 999999).toString();
   }
   async signIn({ email, password }: LoginUserDto): Promise<any> {
+    console.log('enter');
     const user = await this.usersService.findOne(email);
+    console.log(user);
     if (!user) throw new UnauthorizedException();
     if (!user.isVerifiedEmail) throw new UnauthorizedException();
     const correctPassword = await compare(password, user.password);
+    console.log(correctPassword);
     if (!correctPassword) {
       throw new UnauthorizedException();
     }
