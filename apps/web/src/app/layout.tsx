@@ -3,6 +3,9 @@ import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Providers } from "@/components/providers";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { HeaderComponent } from "@/components/HeaderComponent";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -32,7 +35,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          {children}
+          <HeaderComponent />
+          <main className="p-5">
+
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
