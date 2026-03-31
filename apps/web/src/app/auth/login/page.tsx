@@ -1,37 +1,33 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { apiPost } from "@/lib/api.client";
 
 export default function LoginPage() {
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         setLoading(true);
 
-        const result = await signIn("credentials", {
-            email,
-            password,
-        });
-
-        setLoading(false);
-
-        if (result?.error) {
-            setError("Identifiants incorrects. Veuillez réessayer.");
-            return;
+        try {
+            await apiPost("/auth/login", { email, password });
+            sessionStorage.setItem("otp_email", email);
+            router.push("/auth/verify");
+        } catch {
+            setError("Identifiants incorrects.");
+        } finally {
+            setLoading(false);
         }
-
-        router.push("/user");
     };
 
     return (

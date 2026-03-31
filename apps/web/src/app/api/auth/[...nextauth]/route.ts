@@ -10,20 +10,23 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
 
       credentials: {
+        otp: { label: "Code", type: "string" },
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(`${process.env.API_BASE_URL}/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(credentials),
-        });
-
+        console.log(credentials);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/verify`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(credentials),
+          },
+        );
         if (!res.ok) return null;
-
+        console.log("test-res-ok");
         const data = await res.json();
-
+        console.log(data);
         return {
           id: data.user.id,
           email: data.user.email,
