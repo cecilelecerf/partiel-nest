@@ -9,11 +9,9 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   const password = await hash('Password123!', 10);
 
-  // Nettoyer la DB
   await prisma.post.deleteMany();
   await prisma.user.deleteMany();
 
-  // Créer les users
   const alice = await prisma.user.create({
     data: {
       email: 'alice@example.com',

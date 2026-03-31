@@ -8,7 +8,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from 'src/generated/prisma/client';
 import { LoginUserDto } from 'src/users/dto/loginUser.dto';
 import { VerifyOtpDto } from 'src/auth/dto/verifyOtp.dto';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
