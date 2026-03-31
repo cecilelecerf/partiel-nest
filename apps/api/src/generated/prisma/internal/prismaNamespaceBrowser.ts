@@ -52,7 +52,8 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Post: 'Post'
+  Training: 'Training',
+  UserTraining: 'UserTraining'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,21 +79,45 @@ export const UserScalarFieldEnum = {
   name: 'name',
   isVerifiedEmail: 'isVerifiedEmail',
   otpCode: 'otpCode',
-  otpExpiredAt: 'otpExpiredAt'
+  otpExpiredAt: 'otpExpiredAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  role: 'role'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PostScalarFieldEnum = {
+export const TrainingScalarFieldEnum = {
   id: 'id',
-  title: 'title',
-  content: 'content',
-  published: 'published',
-  authorId: 'authorId'
+  name: 'name',
+  description: 'description',
+  muscleGroup: 'muscleGroup',
+  secondaryMuscles: 'secondaryMuscles',
+  type: 'type',
+  difficulty: 'difficulty',
+  equipment: 'equipment',
+  tutorialUrl: 'tutorialUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
+
+
+export const UserTrainingScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  duration: 'duration',
+  sets: 'sets',
+  reps: 'reps',
+  doneAt: 'doneAt',
+  trainingId: 'trainingId',
+  userId: 'userId'
+} as const
+
+export type UserTrainingScalarFieldEnum = (typeof UserTrainingScalarFieldEnum)[keyof typeof UserTrainingScalarFieldEnum]
 
 
 export const SortOrder = {

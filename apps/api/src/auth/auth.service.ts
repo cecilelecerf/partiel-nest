@@ -42,7 +42,12 @@ export class AuthService {
     const now = new Date();
     if (now > user.otpExpiredAt || user.email !== email)
       throw new UnauthorizedException();
-    const payload = { id: user.id, email: user.email, name: user.name };
+    const payload = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    };
     await this.usersService.deleteOtp(user.id);
     return {
       access_token: await this.jwtService.signAsync(payload, {}),
@@ -50,6 +55,7 @@ export class AuthService {
       user: {
         id: payload.id,
         email: payload.email,
+        role: payload.role,
       },
     };
   }
