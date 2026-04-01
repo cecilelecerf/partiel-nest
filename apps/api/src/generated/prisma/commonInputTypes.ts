@@ -199,13 +199,6 @@ export type EnumExerciseTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel> | $Enums.ExerciseType
 }
 
-export type EnumDifficultyFilter<$PrismaModel = never> = {
-  equals?: $Enums.Difficulty | Prisma.EnumDifficultyFieldRefInput<$PrismaModel>
-  in?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDifficultyFilter<$PrismaModel> | $Enums.Difficulty
-}
-
 export type EnumEquipmentFilter<$PrismaModel = never> = {
   equals?: $Enums.Equipment | Prisma.EnumEquipmentFieldRefInput<$PrismaModel>
   in?: $Enums.Equipment[] | Prisma.ListEnumEquipmentFieldRefInput<$PrismaModel>
@@ -221,16 +214,6 @@ export type EnumExerciseTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel>
-}
-
-export type EnumDifficultyWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Difficulty | Prisma.EnumDifficultyFieldRefInput<$PrismaModel>
-  in?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDifficultyWithAggregatesFilter<$PrismaModel> | $Enums.Difficulty
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumDifficultyFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumDifficultyFilter<$PrismaModel>
 }
 
 export type EnumEquipmentWithAggregatesFilter<$PrismaModel = never> = {
@@ -441,13 +424,6 @@ export type NestedEnumExerciseTypeFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel> | $Enums.ExerciseType
 }
 
-export type NestedEnumDifficultyFilter<$PrismaModel = never> = {
-  equals?: $Enums.Difficulty | Prisma.EnumDifficultyFieldRefInput<$PrismaModel>
-  in?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDifficultyFilter<$PrismaModel> | $Enums.Difficulty
-}
-
 export type NestedEnumEquipmentFilter<$PrismaModel = never> = {
   equals?: $Enums.Equipment | Prisma.EnumEquipmentFieldRefInput<$PrismaModel>
   in?: $Enums.Equipment[] | Prisma.ListEnumEquipmentFieldRefInput<$PrismaModel>
@@ -463,16 +439,6 @@ export type NestedEnumExerciseTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumExerciseTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumDifficultyWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.Difficulty | Prisma.EnumDifficultyFieldRefInput<$PrismaModel>
-  in?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.Difficulty[] | Prisma.ListEnumDifficultyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumDifficultyWithAggregatesFilter<$PrismaModel> | $Enums.Difficulty
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumDifficultyFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumDifficultyFilter<$PrismaModel>
 }
 
 export type NestedEnumEquipmentWithAggregatesFilter<$PrismaModel = never> = {

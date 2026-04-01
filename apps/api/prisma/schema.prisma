@@ -20,17 +20,17 @@ enum UserRole {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
-  email           String         @unique
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
   password        String
   name            String?
-  isVerifiedEmail Boolean        @default(false)
+  isVerifiedEmail Boolean   @default(false)
   otpCode         String?
   otpExpiredAt    DateTime?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  role            UserRole        @default(USER)
-  userTrainings   UserTraining[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  role            UserRole  @default(USER)
+  userWorkouts    Workout[]
 }
 
 enum ExerciseType {
@@ -38,12 +38,6 @@ enum ExerciseType {
   CARDIO
   MOBILITY
   HYPERTROPHY
-}
-
-enum Difficulty {
-  BEGINNER
-  INTERMEDIATE
-  ADVANCED
 }
 
 enum Equipment {
@@ -54,22 +48,33 @@ enum Equipment {
   KETTLEBELL
 }
 
-model Training {
-  id               Int            @id @default(autoincrement())
+model Exercice {
+  id               Int          @id @default(autoincrement())
   name             String
   description      String?
   muscleGroup      String
   secondaryMuscles String[]
   type             ExerciseType
-  difficulty       Difficulty
   equipment        Equipment
   tutorialUrl      String?
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  userTrainings    UserTraining[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  workoutExercice WorkoutExercice[]
 }
 
-model UserTraining {
+model Workout {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  workoutExercice WorkoutExercice[]
+}
+
+model WorkoutExercice {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -78,9 +83,9 @@ model UserTraining {
   reps      Int
   doneAt    DateTime @default(now())
 
-  trainingId Int
-  training   Training @relation(fields: [trainingId], references: [id], onDelete: Cascade)
+  workoutId Int
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exerciceId Int
+  exercice   Exercice @relation(fields: [exerciceId], references: [id], onDelete: Cascade)
 }

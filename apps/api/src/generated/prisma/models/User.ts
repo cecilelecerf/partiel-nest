@@ -256,7 +256,7 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingListRelationFilter
+  userWorkouts?: Prisma.WorkoutListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -270,7 +270,7 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  userTrainings?: Prisma.UserTrainingOrderByRelationAggregateInput
+  userWorkouts?: Prisma.WorkoutOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -287,7 +287,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingListRelationFilter
+  userWorkouts?: Prisma.WorkoutListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -334,7 +334,7 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingCreateNestedManyWithoutUserInput
+  userWorkouts?: Prisma.WorkoutCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -348,7 +348,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   role?: $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingUncheckedCreateNestedManyWithoutUserInput
+  userWorkouts?: Prisma.WorkoutUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -361,7 +361,7 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingUpdateManyWithoutUserNestedInput
+  userWorkouts?: Prisma.WorkoutUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -375,7 +375,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  userTrainings?: Prisma.UserTrainingUncheckedUpdateManyWithoutUserNestedInput
+  userWorkouts?: Prisma.WorkoutUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -500,21 +500,21 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserCreateNestedOneWithoutUserTrainingsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTrainingsInput, Prisma.UserUncheckedCreateWithoutUserTrainingsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTrainingsInput
+export type UserCreateNestedOneWithoutUserWorkoutsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserWorkoutsInput, Prisma.UserUncheckedCreateWithoutUserWorkoutsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserWorkoutsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutUserTrainingsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutUserTrainingsInput, Prisma.UserUncheckedCreateWithoutUserTrainingsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserTrainingsInput
-  upsert?: Prisma.UserUpsertWithoutUserTrainingsInput
+export type UserUpdateOneRequiredWithoutUserWorkoutsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserWorkoutsInput, Prisma.UserUncheckedCreateWithoutUserWorkoutsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserWorkoutsInput
+  upsert?: Prisma.UserUpsertWithoutUserWorkoutsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserTrainingsInput, Prisma.UserUpdateWithoutUserTrainingsInput>, Prisma.UserUncheckedUpdateWithoutUserTrainingsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserWorkoutsInput, Prisma.UserUpdateWithoutUserWorkoutsInput>, Prisma.UserUncheckedUpdateWithoutUserWorkoutsInput>
 }
 
-export type UserCreateWithoutUserTrainingsInput = {
+export type UserCreateWithoutUserWorkoutsInput = {
   email: string
   password: string
   name?: string | null
@@ -526,7 +526,7 @@ export type UserCreateWithoutUserTrainingsInput = {
   role?: $Enums.UserRole
 }
 
-export type UserUncheckedCreateWithoutUserTrainingsInput = {
+export type UserUncheckedCreateWithoutUserWorkoutsInput = {
   id?: number
   email: string
   password: string
@@ -539,23 +539,23 @@ export type UserUncheckedCreateWithoutUserTrainingsInput = {
   role?: $Enums.UserRole
 }
 
-export type UserCreateOrConnectWithoutUserTrainingsInput = {
+export type UserCreateOrConnectWithoutUserWorkoutsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserTrainingsInput, Prisma.UserUncheckedCreateWithoutUserTrainingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserWorkoutsInput, Prisma.UserUncheckedCreateWithoutUserWorkoutsInput>
 }
 
-export type UserUpsertWithoutUserTrainingsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutUserTrainingsInput, Prisma.UserUncheckedUpdateWithoutUserTrainingsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutUserTrainingsInput, Prisma.UserUncheckedCreateWithoutUserTrainingsInput>
+export type UserUpsertWithoutUserWorkoutsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserWorkoutsInput, Prisma.UserUncheckedUpdateWithoutUserWorkoutsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserWorkoutsInput, Prisma.UserUncheckedCreateWithoutUserWorkoutsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutUserTrainingsInput = {
+export type UserUpdateToOneWithWhereWithoutUserWorkoutsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutUserTrainingsInput, Prisma.UserUncheckedUpdateWithoutUserTrainingsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserWorkoutsInput, Prisma.UserUncheckedUpdateWithoutUserWorkoutsInput>
 }
 
-export type UserUpdateWithoutUserTrainingsInput = {
+export type UserUpdateWithoutUserWorkoutsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -567,7 +567,7 @@ export type UserUpdateWithoutUserTrainingsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
 }
 
-export type UserUncheckedUpdateWithoutUserTrainingsInput = {
+export type UserUncheckedUpdateWithoutUserWorkoutsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
@@ -586,11 +586,11 @@ export type UserUncheckedUpdateWithoutUserTrainingsInput = {
  */
 
 export type UserCountOutputType = {
-  userTrainings: number
+  userWorkouts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userTrainings?: boolean | UserCountOutputTypeCountUserTrainingsArgs
+  userWorkouts?: boolean | UserCountOutputTypeCountUserWorkoutsArgs
 }
 
 /**
@@ -606,8 +606,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountUserTrainingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserTrainingWhereInput
+export type UserCountOutputTypeCountUserWorkoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkoutWhereInput
 }
 
 
@@ -622,7 +622,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   role?: boolean
-  userTrainings?: boolean | Prisma.User$userTrainingsArgs<ExtArgs>
+  userWorkouts?: boolean | Prisma.User$userWorkoutsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -667,7 +667,7 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "isVerifiedEmail" | "otpCode" | "otpExpiredAt" | "createdAt" | "updatedAt" | "role", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userTrainings?: boolean | Prisma.User$userTrainingsArgs<ExtArgs>
+  userWorkouts?: boolean | Prisma.User$userWorkoutsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -676,7 +676,7 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    userTrainings: Prisma.$UserTrainingPayload<ExtArgs>[]
+    userWorkouts: Prisma.$WorkoutPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1083,7 +1083,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  userTrainings<T extends Prisma.User$userTrainingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userTrainingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserTrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userWorkouts<T extends Prisma.User$userWorkoutsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userWorkoutsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1511,27 +1511,27 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.userTrainings
+ * User.userWorkouts
  */
-export type User$userTrainingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$userWorkoutsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the UserTraining
+   * Select specific fields to fetch from the Workout
    */
-  select?: Prisma.UserTrainingSelect<ExtArgs> | null
+  select?: Prisma.WorkoutSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the UserTraining
+   * Omit specific fields from the Workout
    */
-  omit?: Prisma.UserTrainingOmit<ExtArgs> | null
+  omit?: Prisma.WorkoutOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UserTrainingInclude<ExtArgs> | null
-  where?: Prisma.UserTrainingWhereInput
-  orderBy?: Prisma.UserTrainingOrderByWithRelationInput | Prisma.UserTrainingOrderByWithRelationInput[]
-  cursor?: Prisma.UserTrainingWhereUniqueInput
+  include?: Prisma.WorkoutInclude<ExtArgs> | null
+  where?: Prisma.WorkoutWhereInput
+  orderBy?: Prisma.WorkoutOrderByWithRelationInput | Prisma.WorkoutOrderByWithRelationInput[]
+  cursor?: Prisma.WorkoutWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.UserTrainingScalarFieldEnum | Prisma.UserTrainingScalarFieldEnum[]
+  distinct?: Prisma.WorkoutScalarFieldEnum | Prisma.WorkoutScalarFieldEnum[]
 }
 
 /**

@@ -1,7 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 
-const BASE = process.env.API_BASE_URL;
+const BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 async function headers() {
   const session = await getServerSession(authOptions);
@@ -14,7 +14,10 @@ async function headers() {
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
+  console.log("enter");
+  console.log(`${BASE}${path}`);
   const res = await fetch(`${BASE}${path}`, { headers: await headers() });
+  console.log(res.body);
   if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
   return res.json();
 }

@@ -6,7 +6,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
-import { TrainingsModule } from './trainings/trainings.module';
+import { ExercicesModule } from './exercices/exercices.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { RolesGuard } from './auth/guards/role.guard';
@@ -17,7 +17,7 @@ import { RolesGuard } from './auth/guards/role.guard';
     UsersModule,
     AuthModule,
     MailModule,
-    TrainingsModule,
+    ExercicesModule,
   ],
   controllers: [AppController],
   providers: [

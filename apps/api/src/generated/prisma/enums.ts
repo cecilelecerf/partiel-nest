@@ -27,15 +27,6 @@ export const ExerciseType = {
 export type ExerciseType = (typeof ExerciseType)[keyof typeof ExerciseType]
 
 
-export const Difficulty = {
-  BEGINNER: 'BEGINNER',
-  INTERMEDIATE: 'INTERMEDIATE',
-  ADVANCED: 'ADVANCED'
-} as const
-
-export type Difficulty = (typeof Difficulty)[keyof typeof Difficulty]
-
-
 export const Equipment = {
   DUMBBELL: 'DUMBBELL',
   BARBELL: 'BARBELL',

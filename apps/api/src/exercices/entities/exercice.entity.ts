@@ -1,17 +1,12 @@
-import {
-  Difficulty,
-  Equipment,
-  ExerciseType,
-} from 'src/generated/prisma/enums';
+import { Equipment, ExerciseType } from 'src/generated/prisma/enums';
 
-export class Training {
+export class Exercice {
   id: number;
   name: string;
   description?: string;
   muscleGroup: string;
   secondaryMuscles: string[];
   type: ExerciseType;
-  difficulty: Difficulty;
   equipment: Equipment;
   tutorialUrl?: string;
   createdAt: Date;

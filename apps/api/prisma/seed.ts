@@ -1,5 +1,4 @@
 import {
-  Difficulty,
   Equipment,
   ExerciseType,
   PrismaClient,
@@ -13,10 +12,11 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const password = await hash('Password123!', 10);
-
-  await prisma.training.deleteMany();
+  await prisma.workoutExercice.deleteMany();
+  await prisma.workout.deleteMany();
+  await prisma.exercice.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.userTraining.deleteMany();
+
   const user = await prisma.user.create({
     data: {
       email: 'user@example.com',
@@ -26,12 +26,14 @@ async function main() {
       isVerifiedEmail: true,
     },
   });
+
   const alice = await prisma.user.create({
     data: {
       email: 'alice@example.com',
       password,
       name: 'Alice',
       role: 'USER',
+      isVerifiedEmail: true,
     },
   });
 
@@ -41,18 +43,22 @@ async function main() {
       password,
       name: 'Bob',
       role: 'USER',
+      isVerifiedEmail: true,
     },
   });
+
   const admin = await prisma.user.create({
     data: {
       email: 'admin@example.com',
       password,
       name: 'Admin',
       role: 'ADMIN',
+      isVerifiedEmail: true,
     },
   });
-  const trainings = await Promise.all([
-    prisma.training.create({
+
+  const exercices = await Promise.all([
+    prisma.exercice.create({
       data: {
         name: 'Squat',
         description:
@@ -60,12 +66,11 @@ async function main() {
         muscleGroup: 'Jambes',
         secondaryMuscles: ['Fessiers', 'Lombaires', 'Abdominaux'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.BARBELL,
         tutorialUrl: 'https://www.youtube.com/watch?v=ultWZbUMPL8',
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Deadlift',
         description:
@@ -73,24 +78,23 @@ async function main() {
         muscleGroup: 'Dos',
         secondaryMuscles: ['Jambes', 'Fessiers', 'Trapèzes', 'Abdominaux'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.ADVANCED,
+
         equipment: Equipment.BARBELL,
         tutorialUrl: 'https://www.youtube.com/watch?v=op9kVnSso6Q',
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Bench Press',
         description: 'Développé couché pour les pectoraux avec une barre.',
         muscleGroup: 'Pectoraux',
         secondaryMuscles: ['Triceps', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.BARBELL,
         tutorialUrl: 'https://www.youtube.com/watch?v=SCVCLChPQFY',
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Pull-up',
         description:
@@ -98,12 +102,11 @@ async function main() {
         muscleGroup: 'Dos',
         secondaryMuscles: ['Biceps', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.BODYWEIGHT,
         tutorialUrl: 'https://www.youtube.com/watch?v=eGo4IYlbE5g',
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Dips',
         description:
@@ -111,44 +114,40 @@ async function main() {
         muscleGroup: 'Triceps',
         secondaryMuscles: ['Pectoraux', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.BODYWEIGHT,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Rowing Haltères',
         description: 'Tirage unilatéral avec haltère pour le dos.',
         muscleGroup: 'Dos',
         secondaryMuscles: ['Biceps', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.DUMBBELL,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Développé Militaire',
         description: 'Exercice debout pour les épaules avec haltères ou barre.',
         muscleGroup: 'Épaules',
         secondaryMuscles: ['Triceps', 'Trapèzes'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.DUMBBELL,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Fentes',
         description: 'Exercice unilatéral pour les jambes et les fessiers.',
         muscleGroup: 'Jambes',
         secondaryMuscles: ['Fessiers', 'Abdominaux'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.DUMBBELL,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Hip Thrust',
         description:
@@ -156,22 +155,20 @@ async function main() {
         muscleGroup: 'Fessiers',
         secondaryMuscles: ['Ischio-jambiers', 'Lombaires'],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.BARBELL,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Curl Biceps',
         description: 'Flexion des bras avec haltères pour isoler les biceps.',
         muscleGroup: 'Bras',
         secondaryMuscles: ['Avant-bras'],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.DUMBBELL,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Gainage Planche',
         description:
@@ -179,22 +176,20 @@ async function main() {
         muscleGroup: 'Abdominaux',
         secondaryMuscles: ['Lombaires', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.BODYWEIGHT,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Burpees',
         description: 'Exercice cardio full body très intense.',
         muscleGroup: 'Full Body',
         secondaryMuscles: ['Pectoraux', 'Jambes', 'Abdominaux'],
         type: ExerciseType.CARDIO,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.BODYWEIGHT,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Mountain Climbers',
         description:
@@ -202,55 +197,50 @@ async function main() {
         muscleGroup: 'Abdominaux',
         secondaryMuscles: ['Épaules', 'Jambes'],
         type: ExerciseType.CARDIO,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.BODYWEIGHT,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Pompes',
         description: 'Exercice classique au poids du corps pour les pectoraux.',
         muscleGroup: 'Pectoraux',
         secondaryMuscles: ['Triceps', 'Épaules'],
         type: ExerciseType.STRENGTH,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.BODYWEIGHT,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Leg Press',
         description: 'Presse à cuisses en machine pour les jambes.',
         muscleGroup: 'Jambes',
         secondaryMuscles: ['Fessiers'],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.MACHINE,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Leg Curl',
         description: 'Flexion des jambes en machine pour les ischio-jambiers.',
         muscleGroup: 'Jambes',
         secondaryMuscles: ['Fessiers'],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.MACHINE,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Calf Raises',
         description: 'Élévation sur la pointe des pieds pour les mollets.',
         muscleGroup: 'Mollets',
         secondaryMuscles: [],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.MACHINE,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Face Pull',
         description:
@@ -258,22 +248,20 @@ async function main() {
         muscleGroup: 'Épaules',
         secondaryMuscles: ['Trapèzes', 'Dos'],
         type: ExerciseType.MOBILITY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.MACHINE,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Tirage Poulie Haute',
         description: 'Tirage vers le bas à la poulie pour le grand dorsal.',
         muscleGroup: 'Dos',
         secondaryMuscles: ['Biceps', 'Épaules'],
         type: ExerciseType.HYPERTROPHY,
-        difficulty: Difficulty.BEGINNER,
         equipment: Equipment.MACHINE,
       },
     }),
-    prisma.training.create({
+    prisma.exercice.create({
       data: {
         name: 'Kettlebell Swing',
         description:
@@ -281,59 +269,99 @@ async function main() {
         muscleGroup: 'Fessiers',
         secondaryMuscles: ['Dos', 'Épaules', 'Abdominaux'],
         type: ExerciseType.CARDIO,
-        difficulty: Difficulty.INTERMEDIATE,
         equipment: Equipment.KETTLEBELL,
       },
     }),
   ]);
 
-  await prisma.userTraining.createMany({
+  const workoutUser = await prisma.workout.create({
+    data: { userId: user.id },
+  });
+
+  await prisma.workoutExercice.createMany({
     data: [
       {
-        userId: user.id,
-        trainingId: trainings[0].id,
+        workoutId: workoutUser.id,
+        exerciceId: exercices[0].id,
         duration: 45,
         sets: 4,
         reps: 8,
       },
       {
-        userId: user.id,
-        trainingId: trainings[2].id,
+        workoutId: workoutUser.id,
+        exerciceId: exercices[2].id,
         duration: 30,
         sets: 3,
         reps: 10,
       },
       {
-        userId: user.id,
-        trainingId: trainings[3].id,
+        workoutId: workoutUser.id,
+        exerciceId: exercices[3].id,
         duration: 20,
         sets: 3,
         reps: 8,
       },
+    ],
+  });
+
+  const workoutBob = await prisma.workout.create({
+    data: { userId: bob.id },
+  });
+
+  await prisma.workoutExercice.createMany({
+    data: [
       {
-        userId: bob.id,
-        trainingId: trainings[1].id,
+        workoutId: workoutBob.id,
+        exerciceId: exercices[1].id,
         duration: 60,
         sets: 5,
         reps: 5,
       },
       {
-        userId: bob.id,
-        trainingId: trainings[11].id,
+        workoutId: workoutBob.id,
+        exerciceId: exercices[11].id,
         duration: 15,
         sets: 3,
         reps: 20,
       },
       {
-        userId: bob.id,
-        trainingId: trainings[14].id,
+        workoutId: workoutBob.id,
+        exerciceId: exercices[14].id,
         duration: 30,
         sets: 4,
         reps: 12,
       },
     ],
   });
-  console.log('Seeded:', { alice, bob });
+
+  const workoutAlice = await prisma.workout.create({
+    data: { userId: alice.id },
+  });
+
+  await prisma.workoutExercice.createMany({
+    data: [
+      {
+        workoutId: workoutAlice.id,
+        exerciceId: exercices[4].id,
+        duration: 25,
+        sets: 3,
+        reps: 12,
+      },
+      {
+        workoutId: workoutAlice.id,
+        exerciceId: exercices[9].id,
+        duration: 20,
+        sets: 3,
+        reps: 15,
+      },
+    ],
+  });
+
+  console.log('Seeded:', {
+    user,
+    admin,
+    exercices: exercices.length,
+  });
 }
 
 main()

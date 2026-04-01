@@ -1,14 +1,12 @@
-"use client"
 
-import { Button } from "@/components/ui/button"
-import { Field } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+import { Search } from "./components/Search"
+import { ExercicesLayout } from "./components/ExercicesLayout"
 
 export default function SearchPage() {
     return <>
-        <Field orientation="horizontal">
-            <Input type="search" placeholder="Search..." />
-            <Button>Search</Button>
-        </Field>
+        <Search />
+        <div>
+            <ExercicesLayout />
+        </div>
     </>
 }

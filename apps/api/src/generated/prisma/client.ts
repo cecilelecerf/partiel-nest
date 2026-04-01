@@ -45,12 +45,17 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Training
+ * Model Exercice
  * 
  */
-export type Training = Prisma.TrainingModel
+export type Exercice = Prisma.ExerciceModel
 /**
- * Model UserTraining
+ * Model Workout
  * 
  */
-export type UserTraining = Prisma.UserTrainingModel
+export type Workout = Prisma.WorkoutModel
+/**
+ * Model WorkoutExercice
+ * 
+ */
+export type WorkoutExercice = Prisma.WorkoutExerciceModel
