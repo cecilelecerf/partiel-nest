@@ -109,6 +109,7 @@ export const WorkoutScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  date: 'date',
   userId: 'userId'
 } as const
 

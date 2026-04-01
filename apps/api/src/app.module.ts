@@ -10,6 +10,7 @@ import { ExercicesModule } from './exercices/exercices.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { RolesGuard } from './auth/guards/role.guard';
+import { WorkoutsModule } from './workouts/workouts.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -18,6 +19,7 @@ import { RolesGuard } from './auth/guards/role.guard';
     AuthModule,
     MailModule,
     ExercicesModule,
+    WorkoutsModule,
   ],
   controllers: [AppController],
   providers: [
