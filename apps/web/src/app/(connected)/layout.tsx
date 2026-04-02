@@ -1,5 +1,3 @@
-import { HeaderComponent } from "@/components/HeaderComponent";
-import { Button } from "@/components/ui/button";
 
 export default function ConnectedLayout({
     children,
@@ -8,7 +6,6 @@ export default function ConnectedLayout({
 }>) {
     return (
         <>
-            <main>{children}</main>
-        </>
+            {children}        </>
     );
 }

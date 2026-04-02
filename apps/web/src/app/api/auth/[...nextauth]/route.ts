@@ -14,7 +14,6 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
       },
       async authorize(credentials) {
-        console.log(credentials);
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/verify`,
           {
@@ -24,9 +23,7 @@ export const authOptions: NextAuthOptions = {
           },
         );
         if (!res.ok) return null;
-        console.log("test-res-ok");
         const data = await res.json();
-        console.log(data);
         return {
           id: data.user.id,
           email: data.user.email,

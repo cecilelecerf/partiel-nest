@@ -1,6 +1,6 @@
 
-import { Search } from "./components/Search"
-import { ExercicesLayout } from "./components/ExercicesLayout"
+import { ExercicesLayout } from "./_components/ExercicesLayout"
+import { Search } from "./_components/Search"
 
 export default function SearchPage() {
     return <>

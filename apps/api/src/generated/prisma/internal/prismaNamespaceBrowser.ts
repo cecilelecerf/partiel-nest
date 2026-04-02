@@ -123,7 +123,6 @@ export const WorkoutExerciceScalarFieldEnum = {
   duration: 'duration',
   sets: 'sets',
   reps: 'reps',
-  doneAt: 'doneAt',
   workoutId: 'workoutId',
   exerciceId: 'exerciceId'
 } as const

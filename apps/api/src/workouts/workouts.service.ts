@@ -39,10 +39,13 @@ export class WorkoutsService {
     });
   }
 
-  findOne(id: Workout['id']) {
+  async findOne(id: Workout['id']) {
     return this.prisma.workout.findUnique({
       where: { id },
-      include: { workoutExercice: true },
+      include: {
+        workoutExercice: { include: { exercice: true } },
+        _count: { select: { workoutExercice: true } },
+      },
     });
   }
 

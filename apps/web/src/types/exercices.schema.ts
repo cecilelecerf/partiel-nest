@@ -1,9 +1,9 @@
 import z from "zod";
-export const exerciceIdSchema = z.number().brand("exercice");
+export const exerciceIdSchema = z.number().nonnegative().brand("exercice");
 
 const exerciseTypeEnumSchema = z.enum([
   "STRENGTH",
-  "CARIO",
+  "CARDIO",
   "MOBILITY",
   "HYPERTROPHY",
 ]);
@@ -24,4 +24,4 @@ export const exerciceSchema = z.object({
   equipment: equipmentEnumSchema,
   tutorialUrl: z.url(),
 });
-export type Training = z.infer<typeof exerciceSchema>;
+export type Exercice = z.infer<typeof exerciceSchema>;

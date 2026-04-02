@@ -14,10 +14,7 @@ async function headers() {
 }
 
 export async function apiGet<T>(path: string): Promise<T> {
-  console.log("enter");
-  console.log(`${BASE}${path}`);
   const res = await fetch(`${BASE}${path}`, { headers: await headers() });
-  console.log(res.body);
   if (!res.ok) throw new Error(`GET ${path} → ${res.status}`);
   return res.json();
 }
@@ -28,7 +25,7 @@ export async function apiPost<T>(path: string, body: unknown): Promise<T> {
     headers: await headers(),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`POST ${path} → ${res.status}`);
+  if (!res.ok) throw new Error(`POST ${path} → ${res.status} ${res.body}`);
   return res.json();
 }
 

@@ -8,6 +8,7 @@ import { VerifyEmailDto } from './dto/verifyEmail.dto';
 import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { VerifyOtpDto } from './dto/verifyOtp.dto';
 import { LoginUserDto } from 'src/users/dto/loginUser.dto';
+import { JwtPayload } from './types/jwt';
 
 @Injectable()
 export class AuthService {
@@ -21,13 +22,10 @@ export class AuthService {
     return randomInt(100000, 999999).toString();
   }
   async signIn({ email, password }: LoginUserDto): Promise<any> {
-    console.log('enter');
     const user = await this.usersService.findOne(email);
-    console.log(user);
     if (!user) throw new UnauthorizedException();
     if (!user.isVerifiedEmail) throw new UnauthorizedException();
     const correctPassword = await compare(password, user.password);
-    console.log(correctPassword);
     if (!correctPassword) {
       throw new UnauthorizedException();
     }
@@ -75,7 +73,7 @@ export class AuthService {
   }
 
   async verifyEmail({ token }: VerifyEmailDto) {
-    const { email } = await this.jwtService.verifyAsync(token);
+    const { email } = await this.jwtService.verifyAsync<JwtPayload>(token);
     if (!email) throw new UnauthorizedException();
     const user = await this.usersService.findOne(email);
     if (!user) throw new UnauthorizedException();
