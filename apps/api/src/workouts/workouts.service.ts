@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { User, Workout } from 'src/generated/prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { User, Workout } from '../generated/prisma/client';
 
 @Injectable()
 export class WorkoutsService {

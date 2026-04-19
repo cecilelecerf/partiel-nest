@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/generated/prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { User } from '../generated/prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -47,5 +47,21 @@ export class UsersService {
       where: { email },
       data: { isVerifiedEmail: true },
     });
+  }
+  async getStats(userId: number) {
+    const workouts = await this.prisma.workout.findMany({
+      where: { userId },
+      include: { workoutExercice: true },
+    });
+
+    const totalWorkouts = workouts.length;
+    const totalDuration = workouts
+      .flatMap((w) => w.workoutExercice)
+      .reduce((acc, we) => acc + (we.duration ?? 0), 0);
+    const uniqueExercices = new Set(
+      workouts.flatMap((w) => w.workoutExercice.map((we) => we.exerciceId)),
+    ).size;
+
+    return { totalWorkouts, totalDuration, uniqueExercices };
   }
 }

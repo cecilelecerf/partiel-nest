@@ -1,4 +1,4 @@
-import { Exercice } from 'src/generated/prisma/client';
+import { Exercice } from '../../generated/prisma/client';
 
 export class CreateExerciceDto {
   name: Exercice['name'];

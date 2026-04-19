@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ExercicesService {
@@ -13,6 +13,12 @@ export class ExercicesService {
 
   findAll() {
     return this.prisma.exercice.findMany();
+  }
+
+  findByIds(ids: number[]) {
+    return this.prisma.exercice.findMany({
+      where: { id: { in: ids } },
+    });
   }
 
   findOne(id: number) {

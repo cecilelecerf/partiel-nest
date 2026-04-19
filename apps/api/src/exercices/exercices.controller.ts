@@ -8,10 +8,11 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ExercicesService } from './exercices.service';
-import {  Roles } from 'src/auth/decorators/roles.decorator';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
-import { UserRole } from 'src/generated/prisma/enums';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../generated/prisma/enums';
+import { FindByIdsDto } from './dto/find-by-ids.dto';
 
 @Controller('exercices')
 export class ExercicesController {
@@ -26,6 +27,11 @@ export class ExercicesController {
   @Get()
   findAll() {
     return this.exercicesService.findAll();
+  }
+
+  @Post('by-ids')
+  findByIds(@Body() findByIds: FindByIdsDto) {
+    return this.exercicesService.findByIds(findByIds.ids);
   }
 
   @Get(':id')

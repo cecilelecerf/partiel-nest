@@ -10,19 +10,16 @@ import {
 import { WorkoutsService } from './workouts.service';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
-import { GetMe } from 'src/auth/decorators/get-me.decorator';
-import { User } from 'src/generated/prisma/client';
+import { GetMe } from '../auth/decorators/get-me.decorator';
+import type { User } from '../generated/prisma/client';
 
 @Controller('workouts')
 export class WorkoutsController {
   constructor(private readonly workoutsService: WorkoutsService) {}
 
   @Post()
-  create(
-    @Body() createWorkoutDto: CreateWorkoutDto,
-    @GetMe('id') userId: User['id'],
-  ) {
-    return this.workoutsService.create(createWorkoutDto, userId);
+  create(@Body() createWorkoutDto: CreateWorkoutDto, @GetMe() user: User) {
+    return this.workoutsService.create(createWorkoutDto, user.id);
   }
 
   @Get()

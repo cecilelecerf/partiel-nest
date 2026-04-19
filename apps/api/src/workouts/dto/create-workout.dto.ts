@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsInt,
+  IsOptional,
   IsPositive,
   ValidateNested,
 } from 'class-validator';
@@ -13,19 +14,22 @@ export class CreateWorkoutExerciceDto {
   exerciceId: number;
 
   @ApiProperty({ example: 30 })
+  @IsOptional()
   @IsInt()
   @IsPositive()
-  duration: number;
+  duration?: number;
 
   @ApiProperty({ example: 4 })
+  @IsOptional()
   @IsInt()
   @IsPositive()
-  sets: number;
+  sets?: number;
 
   @ApiProperty({ example: 8 })
+  @IsOptional()
   @IsInt()
   @IsPositive()
-  reps: number;
+  reps?: number;
 }
 
 export class CreateWorkoutDto {
