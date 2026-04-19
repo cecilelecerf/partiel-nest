@@ -19,10 +19,10 @@ export default async function AdminLayout({
         </p>
         <nav className="flex flex-col gap-1">
           <Link
-            href="/admin/exercices"
+            href="/admin/exercises"
             className="text-sm px-3 py-2 rounded-md hover:bg-secondary transition-colors"
           >
-            Exercices
+            Exercises
           </Link>
           <Link
             href="/admin/users"

@@ -6,11 +6,11 @@ import { formatDuration, getTotalDuration } from "../utils";
 export const WorkoutCard = ({
   id,
   date,
-  _count: { workoutExercice: exerciceCount },
-  workoutExercice,
+  _count: { workoutExercise: exerciseCount },
+  workoutExercise,
 }: WorkoutWithMeta) => {
   const totalDuration = getTotalDuration(
-    workoutExercice
+    workoutExercise
       .filter((ex) => ex.duration !== undefined)
       .map((ex) => ex.duration as number),
   );
@@ -25,13 +25,13 @@ export const WorkoutCard = ({
             })}
           </p>
           <p>
-            {exerciceCount} exercices - {hour}h{min}
+            {exerciseCount} exercises - {hour}h{min}
           </p>
           <div className="flex gap-2">
-            {workoutExercice.map(({ exercice }, i) => (
+            {workoutExercise.map(({ exercise }, i) => (
               <p key={i} className="text-sm">
-                {exercice.muscleGroup}
-                {i !== workoutExercice.length - 1 && "-"}
+                {exercise.muscleGroup}
+                {i !== workoutExercise.length - 1 && "-"}
               </p>
             ))}
           </div>

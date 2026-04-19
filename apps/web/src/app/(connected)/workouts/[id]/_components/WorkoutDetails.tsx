@@ -1,33 +1,33 @@
 "use client";
 
-import { CardExercice } from "@/app/(connected)/search/_components/CardExercice";
+import { CardExercise } from "@/app/(connected)/exercises/_components/CardExercise";
 import { Button } from "@/components/ui/button";
 import { apiPatch } from "@/lib/api.client";
-import { WorkoutExercice } from "@/types/workoutExercices.schema";
-import { WorkoutWithExerciceWithMeta } from "@/types/workouts.schema";
+import { WorkoutExercise } from "@/types/workoutExercises.schema";
+import { WorkoutWithExerciseWithMeta } from "@/types/workouts.schema";
 import { Edit, SaveIcon, XIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export const WorkoutDetails = ({
   date: defaultDate,
-  workoutExercice: defaultWorkoutExercice,
+  workoutExercise: defaultWorkoutExercise,
   id,
-}: WorkoutWithExerciceWithMeta) => {
+}: WorkoutWithExerciseWithMeta) => {
   const { data: session } = useSession();
 
-  const [exercices, setExercices] = useState(defaultWorkoutExercice);
+  const [exercises, setExercises] = useState(defaultWorkoutExercise);
   const [date, setDate] = useState<Date>(defaultDate);
   const [isEditingDate, setIsEditingDate] = useState(false);
-  const handleChange = (id: number, data: Partial<WorkoutExercice>) => {
-    setExercices((prev) =>
+  const handleChange = (id: number, data: Partial<WorkoutExercise>) => {
+    setExercises((prev) =>
       prev.map((we) => (we.id === id ? { ...we, ...data } : we)),
     );
   };
 
   const handleSave = async () => {
     if (!session?.accessToken) return;
-    await apiPatch(`/workouts/${id}`, { date, exercices }, session.accessToken);
+    await apiPatch(`/workouts/${id}`, { date, exercises }, session.accessToken);
   };
   return (
     <>
@@ -58,12 +58,12 @@ export const WorkoutDetails = ({
         </Button>
       </div>
       <div className="space-y-12">
-        {exercices.map((we) => (
-          <CardExercice
-            key={we.exercice.id}
-            {...we.exercice}
-            workoutExercice={we}
-            onChangeWorkoutExercice={(data) => handleChange(we.id, data)}
+        {exercises.map((we) => (
+          <CardExercise
+            key={we.exercise.id}
+            {...we.exercise}
+            workoutExercise={we}
+            onChangeWorkoutExercise={(data) => handleChange(we.id, data)}
           />
         ))}
       </div>

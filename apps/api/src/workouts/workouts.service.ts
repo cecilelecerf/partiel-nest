@@ -13,12 +13,12 @@ export class WorkoutsService {
       data: {
         userId,
         date: createWorkoutDto.date,
-        workoutExercice: {
-          create: createWorkoutDto.exercices,
+        workoutExercise: {
+          create: createWorkoutDto.exercises,
         },
       },
       include: {
-        workoutExercice: true,
+        workoutExercise: true,
       },
     });
   }
@@ -28,11 +28,11 @@ export class WorkoutsService {
   findAllWithMeta() {
     return this.prisma.workout.findMany({
       include: {
-        _count: { select: { workoutExercice: true } },
-        workoutExercice: {
+        _count: { select: { workoutExercise: true } },
+        workoutExercise: {
           select: {
             duration: true,
-            exercice: { select: { muscleGroup: true, type: true } },
+            exercise: { select: { muscleGroup: true, type: true } },
           },
         },
       },
@@ -43,8 +43,8 @@ export class WorkoutsService {
     return this.prisma.workout.findUnique({
       where: { id },
       include: {
-        workoutExercice: { include: { exercice: true } },
-        _count: { select: { workoutExercice: true } },
+        workoutExercise: { include: { exercise: true } },
+        _count: { select: { workoutExercise: true } },
       },
     });
   }
@@ -54,19 +54,19 @@ export class WorkoutsService {
       where: { id },
       data: {
         date: updateWorkoutDto.date,
-        workoutExercice: {
-          update: updateWorkoutDto.exercices.map((workoutExercice) => ({
-            where: { id: workoutExercice.id },
+        workoutExercise: {
+          update: updateWorkoutDto.exercises.map((workoutExercise) => ({
+            where: { id: workoutExercise.id },
             data: {
-              sets: workoutExercice.sets,
-              reps: workoutExercice.reps,
-              duration: workoutExercice.duration,
+              sets: workoutExercise.sets,
+              reps: workoutExercise.reps,
+              duration: workoutExercise.duration,
             },
           })),
         },
       },
       include: {
-        workoutExercice: true,
+        workoutExercise: true,
       },
     });
   }

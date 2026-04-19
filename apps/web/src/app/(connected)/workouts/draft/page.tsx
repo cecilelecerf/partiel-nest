@@ -2,48 +2,48 @@
 
 import { useWorkoutDraft } from "@/stores/useWorkoutDraft";
 import { useSession } from "next-auth/react";
-import { Exercice, ExerciceId, exerciceSchema } from "@/types/exercices.schema";
+import { Exercise, ExerciseId, exerciseSchema } from "@/types/exercises.schema";
 import { useEffect, useState } from "react";
 import { apiPost } from "@/lib/api.client";
-import { CardExercice } from "../../search/_components/CardExercice";
+import { CardExercise } from "../../exercises/_components/CardExercise";
 import {
-  WorkoutExercice,
-  WorkoutExerciceTest,
-} from "@/types/workoutExercices.schema";
+  WorkoutExercise,
+  WorkoutExerciseTest,
+} from "@/types/workoutExercises.schema";
 import { Button } from "@/components/ui/button";
 import { SaveIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { workoutWithExerciceIdSchema } from "@/types/workouts.schema";
+import { workoutWithExerciseIdSchema } from "@/types/workouts.schema";
 
 export default function DraftWorkout() {
   const router = useRouter();
   const { ids, clear } = useWorkoutDraft();
   const { data: session } = useSession();
 
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [workoutExercices, setWorkoutExercices] = useState<
-    WorkoutExerciceTest[]
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [workoutExercises, setWorkoutExercises] = useState<
+    WorkoutExerciseTest[]
   >([]);
   const [date, setDate] = useState(new Date());
   const [isEditingDate, setIsEditingDate] = useState(false);
 
   useEffect(() => {
     if (!session?.accessToken || ids.length === 0) return;
-    apiPost<Exercice[]>("/exercices/by-ids", { ids }, session.accessToken)
-      .then((data) => exerciceSchema.array().parse(data))
+    apiPost<Exercise[]>("/exercises/by-ids", { ids }, session.accessToken)
+      .then((data) => exerciseSchema.array().parse(data))
       .then((data) => {
-        setExercices(data);
-        setWorkoutExercices(data.map((d) => ({ exerciceId: d.id })));
+        setExercises(data);
+        setWorkoutExercises(data.map((d) => ({ exerciseId: d.id })));
       });
   }, [ids, session?.accessToken]);
 
   const handleChange = (
-    exerciceId: ExerciceId,
-    data: Partial<WorkoutExercice>,
+    exerciseId: ExerciseId,
+    data: Partial<WorkoutExercise>,
   ) => {
-    setWorkoutExercices((prev) =>
+    setWorkoutExercises((prev) =>
       prev.map((we) =>
-        we.exerciceId === exerciceId ? { ...we, ...data, exerciceId } : we,
+        we.exerciseId === exerciseId ? { ...we, ...data, exerciseId } : we,
       ),
     );
   };
@@ -52,9 +52,9 @@ export default function DraftWorkout() {
     if (!session?.accessToken) return;
     const response = await apiPost(
       "/workouts",
-      { date, exercices: workoutExercices },
+      { date, exercises: workoutExercises },
       session.accessToken,
-    ).then((data) => workoutWithExerciceIdSchema.parse(data));
+    ).then((data) => workoutWithExerciseIdSchema.parse(data));
     clear();
     router.push(`/workouts/${response.id}`);
   };
@@ -62,7 +62,7 @@ export default function DraftWorkout() {
   if (ids.length === 0)
     return (
       <p className="text-muted-foreground">
-        Pas d&apos;exercice enregistré pour la séance.
+        Pas d&apos;exercise enregistré pour la séance.
       </p>
     );
 
@@ -89,12 +89,12 @@ export default function DraftWorkout() {
       </div>
 
       <div className="space-y-6">
-        {exercices.map((exercice) => (
-          <CardExercice
-            key={exercice.id}
-            {...exercice}
-            workoutExercice={{}}
-            onChangeWorkoutExercice={(data) => handleChange(exercice.id, data)}
+        {exercises.map((exercise) => (
+          <CardExercise
+            key={exercise.id}
+            {...exercise}
+            workoutExercise={{}}
+            onChangeWorkoutExercise={(data) => handleChange(exercise.id, data)}
             draft={{ button: true }}
           />
         ))}

@@ -1,12 +1,12 @@
-import { ExerciceId } from "@/types/exercices.schema";
+import { ExerciseId } from "@/types/exercises.schema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 type WorkoutDraftStore = {
-  ids: ExerciceId[];
-  add: (id: ExerciceId) => void;
-  remove: (id: ExerciceId) => void;
-  toggle: (id: ExerciceId) => void;
+  ids: ExerciseId[];
+  add: (id: ExerciseId) => void;
+  remove: (id: ExerciseId) => void;
+  toggle: (id: ExerciseId) => void;
   clear: () => void;
 };
 

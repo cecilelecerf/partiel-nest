@@ -50,7 +50,7 @@ export const HeaderComponent = () => {
   return (
     <header className="flex justify-between bg-gray-50/20 p-5 backdrop-blur-xl sticky top-0">
       <h1 className="font-bold">
-        <Link href="/">Gestion exercices</Link>
+        <Link href="/">Gestion exercises</Link>
       </h1>
       <nav className={`${navClassName} flex`}>
         {session ? (

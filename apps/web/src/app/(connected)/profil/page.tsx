@@ -7,7 +7,7 @@ import { apiGet } from "@/lib/api.client";
 type Stats = {
   totalWorkouts: number;
   totalDuration: number;
-  uniqueExercices: number;
+  uniqueExercises: number;
 };
 
 export default function ProfilPage() {
@@ -39,9 +39,9 @@ export default function ProfilPage() {
           </div>
           <div className="bg-secondary rounded-lg p-4 space-y-1">
             <p className="text-xs text-muted-foreground">
-              Exercices différents
+              Exercises différents
             </p>
-            <p className="text-2xl font-medium">{stats.uniqueExercices}</p>
+            <p className="text-2xl font-medium">{stats.uniqueExercises}</p>
           </div>
         </div>
       )}

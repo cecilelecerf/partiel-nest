@@ -1,25 +1,25 @@
 import z from "zod";
-import { exerciceIdSchema } from "./exercices.schema";
+import { exerciseIdSchema } from "./exercises.schema";
 
-export const workoutExerciceIdSchema = z
+export const workoutExerciseIdSchema = z
   .number()
   .nonnegative()
-  .brand("workout-exercice");
-export const workoutExerciceSchema = z.object({
-  id: workoutExerciceIdSchema,
+  .brand("workout-exercise");
+export const workoutExerciseSchema = z.object({
+  id: workoutExerciseIdSchema,
   duration: z.number().positive().optional().nullable(),
   sets: z.number().positive().optional().nullable(),
   reps: z.number().positive().optional().nullable(),
 });
 
-export type WorkoutExercice = z.infer<typeof workoutExerciceSchema>;
+export type WorkoutExercise = z.infer<typeof workoutExerciseSchema>;
 
-export const workoutExerciceFormSchema = workoutExerciceSchema.omit({
+export const workoutExerciseFormSchema = workoutExerciseSchema.omit({
   id: true,
 });
-export type WorkoutExerciceForm = z.infer<typeof workoutExerciceFormSchema>;
+export type WorkoutExerciseForm = z.infer<typeof workoutExerciseFormSchema>;
 
-export const workoutExerciceTestSchema = workoutExerciceFormSchema.extend({
-  exerciceId: exerciceIdSchema,
+export const workoutExerciseTestSchema = workoutExerciseFormSchema.extend({
+  exerciseId: exerciseIdSchema,
 });
-export type WorkoutExerciceTest = z.infer<typeof workoutExerciceTestSchema>;
+export type WorkoutExerciseTest = z.infer<typeof workoutExerciseTestSchema>;

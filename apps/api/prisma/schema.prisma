@@ -48,7 +48,7 @@ enum Equipment {
   KETTLEBELL
 }
 
-model Exercice {
+model Exercise {
   id               Int          @id @default(autoincrement())
   name             String
   description      String?
@@ -60,7 +60,7 @@ model Exercice {
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 
-  workoutExercice WorkoutExercice[]
+  workoutExercise WorkoutExercise[]
 }
 
 model Workout {
@@ -71,10 +71,10 @@ model Workout {
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  workoutExercice WorkoutExercice[]
+  workoutExercise WorkoutExercise[]
 }
 
-model WorkoutExercice {
+model WorkoutExercise {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -85,6 +85,6 @@ model WorkoutExercice {
   workoutId Int
   workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
 
-  exerciceId Int
-  exercice   Exercice @relation(fields: [exerciceId], references: [id], onDelete: Cascade)
+  exerciseId Int
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
 }

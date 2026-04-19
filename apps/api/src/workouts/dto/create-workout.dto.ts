@@ -8,10 +8,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 
-export class CreateWorkoutExerciceDto {
+export class CreateWorkoutExerciseDto {
   @ApiProperty({ example: 1 })
   @IsInt()
-  exerciceId: number;
+  exerciseId: number;
 
   @ApiProperty({ example: 30 })
   @IsOptional()
@@ -37,8 +37,8 @@ export class CreateWorkoutDto {
   @IsDateString()
   date: string;
 
-  @ApiProperty({ type: [CreateWorkoutExerciceDto] })
+  @ApiProperty({ type: [CreateWorkoutExerciseDto] })
   @ValidateNested({ each: true })
-  @Type(() => CreateWorkoutExerciceDto)
-  exercices: CreateWorkoutExerciceDto[];
+  @Type(() => CreateWorkoutExerciseDto)
+  exercises: CreateWorkoutExerciseDto[];
 }

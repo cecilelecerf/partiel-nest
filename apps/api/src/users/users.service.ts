@@ -51,17 +51,17 @@ export class UsersService {
   async getStats(userId: number) {
     const workouts = await this.prisma.workout.findMany({
       where: { userId },
-      include: { workoutExercice: true },
+      include: { workoutExercise: true },
     });
 
     const totalWorkouts = workouts.length;
     const totalDuration = workouts
-      .flatMap((w) => w.workoutExercice)
+      .flatMap((w) => w.workoutExercise)
       .reduce((acc, we) => acc + (we.duration ?? 0), 0);
-    const uniqueExercices = new Set(
-      workouts.flatMap((w) => w.workoutExercice.map((we) => we.exerciceId)),
+    const uniqueExercises = new Set(
+      workouts.flatMap((w) => w.workoutExercise.map((we) => we.exerciseId)),
     ).size;
 
-    return { totalWorkouts, totalDuration, uniqueExercices };
+    return { totalWorkouts, totalDuration, uniqueExercises };
   }
 }

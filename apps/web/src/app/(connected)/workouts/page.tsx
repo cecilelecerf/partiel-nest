@@ -5,7 +5,7 @@ import {
 } from "@/types/workouts.schema";
 import { WorkoutCard } from "./_components/WorkoutCard";
 
-export default async function MyExercicesPage() {
+export default async function MyExercisesPage() {
   const workouts = await apiGet<WorkoutWithMeta[]>("/workouts").then((data) =>
     workoutWithMetaSchema.array().parse(data),
   );

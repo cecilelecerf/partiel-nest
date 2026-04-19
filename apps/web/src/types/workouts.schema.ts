@@ -1,6 +1,6 @@
 import z from "zod";
-import { workoutExerciceSchema } from "./workoutExercices.schema";
-import { exerciceIdSchema, exerciceSchema } from "./exercices.schema";
+import { workoutExerciseSchema } from "./workoutExercises.schema";
+import { exerciseIdSchema, exerciseSchema } from "./exercises.schema";
 
 export const workoutIdSchema = z.number().nonnegative().brand("workout");
 export const workoutSchema = z.object({
@@ -10,11 +10,11 @@ export const workoutSchema = z.object({
 export type Workout = z.infer<typeof workoutSchema>;
 
 export const workoutWithMetaSchema = workoutSchema.extend({
-  _count: z.object({ workoutExercice: z.number().nonnegative() }),
-  workoutExercice: workoutExerciceSchema
+  _count: z.object({ workoutExercise: z.number().nonnegative() }),
+  workoutExercise: workoutExerciseSchema
     .pick({ duration: true })
     .extend({
-      exercice: exerciceSchema.pick({
+      exercise: exerciseSchema.pick({
         muscleGroup: true,
         type: true,
       }),
@@ -23,22 +23,22 @@ export const workoutWithMetaSchema = workoutSchema.extend({
 });
 
 export type WorkoutWithMeta = z.infer<typeof workoutWithMetaSchema>;
-export const workoutWithExerciceIdSchema = workoutSchema.extend({
-  workoutExercice: workoutExerciceSchema
-    .extend({ exerciceId: exerciceIdSchema })
+export const workoutWithExerciseIdSchema = workoutSchema.extend({
+  workoutExercise: workoutExerciseSchema
+    .extend({ exerciseId: exerciseIdSchema })
     .array(),
 });
-export type WorkoutWithExerciceId = z.infer<typeof workoutWithExerciceIdSchema>;
+export type WorkoutWithExerciseId = z.infer<typeof workoutWithExerciseIdSchema>;
 
-export const workoutWithExerciceSchema = workoutSchema.extend({
-  workoutExercice: workoutExerciceSchema
-    .extend({ exercice: exerciceSchema })
+export const workoutWithExerciseSchema = workoutSchema.extend({
+  workoutExercise: workoutExerciseSchema
+    .extend({ exercise: exerciseSchema })
     .array(),
 });
-export const workoutWithExerciceWithMetaSchema =
-  workoutWithExerciceSchema.extend({
-    _count: z.object({ workoutExercice: z.number().nonnegative() }),
+export const workoutWithExerciseWithMetaSchema =
+  workoutWithExerciseSchema.extend({
+    _count: z.object({ workoutExercise: z.number().nonnegative() }),
   });
-export type WorkoutWithExerciceWithMeta = z.infer<
-  typeof workoutWithExerciceWithMetaSchema
+export type WorkoutWithExerciseWithMeta = z.infer<
+  typeof workoutWithExerciseWithMetaSchema
 >;
