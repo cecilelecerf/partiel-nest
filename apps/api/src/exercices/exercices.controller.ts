@@ -8,15 +8,16 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ExercicesService } from './exercices.service';
-import { Role, Roles } from 'src/auth/decorators/roles.decorator';
+import {  Roles } from 'src/auth/decorators/roles.decorator';
 import { CreateExerciceDto } from './dto/create-exercice.dto';
 import { UpdateExerciceDto } from './dto/update-exercice.dto';
+import { UserRole } from 'src/generated/prisma/enums';
 
 @Controller('exercices')
 export class ExercicesController {
   constructor(private readonly exercicesService: ExercicesService) {}
 
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.ADMIN)
   @Post()
   create(@Body() createExerciceDto: CreateExerciceDto) {
     return this.exercicesService.create(createExerciceDto);
@@ -32,7 +33,7 @@ export class ExercicesController {
     return this.exercicesService.findOne(+id);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.ADMIN)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -41,7 +42,7 @@ export class ExercicesController {
     return this.exercicesService.update(+id, updateExerciceDto);
   }
 
-  @Roles(Role.ADMIN)
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.exercicesService.remove(+id);

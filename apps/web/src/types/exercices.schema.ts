@@ -1,6 +1,6 @@
 import z from "zod";
 export const exerciceIdSchema = z.number().nonnegative().brand("exercice");
-
+export type ExerciceId = z.infer<typeof exerciceIdSchema>;
 const exerciseTypeEnumSchema = z.enum([
   "STRENGTH",
   "CARDIO",

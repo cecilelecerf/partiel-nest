@@ -55,10 +55,13 @@ export class WorkoutsService {
       data: {
         date: updateWorkoutDto.date,
         workoutExercice: {
-          upsert: updateWorkoutDto.exercices?.map((exercice) => ({
-            where: { id: exercice.exerciceId },
-            update: exercice,
-            create: exercice,
+          update: updateWorkoutDto.exercices.map((workoutExercice) => ({
+            where: { id: workoutExercice.id },
+            data: {
+              sets: workoutExercice.sets,
+              reps: workoutExercice.reps,
+              duration: workoutExercice.duration,
+            },
           })),
         },
       },
