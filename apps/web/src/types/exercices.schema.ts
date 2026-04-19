@@ -22,6 +22,6 @@ export const exerciceSchema = z.object({
   secondaryMuscles: z.array(z.string()),
   type: exerciseTypeEnumSchema,
   equipment: equipmentEnumSchema,
-  tutorialUrl: z.url(),
+  tutorialUrl: z.url().nullable(),
 });
 export type Exercice = z.infer<typeof exerciceSchema>;

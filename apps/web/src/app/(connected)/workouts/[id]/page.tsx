@@ -1,14 +1,20 @@
 import { apiGet } from "@/lib/api.server";
 import {
-  WorkoutWithExercice,
-  workoutWithExerciceSchema,
+  WorkoutWithExerciceWithMeta,
+  workoutWithExerciceWithMetaSchema,
 } from "@/types/workouts.schema";
 import { WorkoutDetails } from "./_components/WorkoutDetails";
 
-export default async function MyExercicePage() {
-  const workout = await apiGet<WorkoutWithExercice>(`/workouts/${1}`).then(
-    (data) => workoutWithExerciceSchema.parse(data),
-  );
+export default async function MyExercicePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const workout = await apiGet<WorkoutWithExerciceWithMeta>(
+    `/workouts/${id}`,
+  ).then((data) => workoutWithExerciceWithMetaSchema.parse(data));
 
   return <WorkoutDetails {...workout} />;
 }

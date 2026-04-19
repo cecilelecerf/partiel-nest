@@ -1,6 +1,6 @@
 import z from "zod";
 import { workoutExerciceSchema } from "./workoutExercices.schema";
-import { exerciceSchema } from "./exercices.schema";
+import { exerciceIdSchema, exerciceSchema } from "./exercices.schema";
 
 export const workoutIdSchema = z.number().nonnegative().brand("workout");
 export const workoutSchema = z.object({
@@ -23,11 +23,22 @@ export const workoutWithMetaSchema = workoutSchema.extend({
 });
 
 export type WorkoutWithMeta = z.infer<typeof workoutWithMetaSchema>;
+export const workoutWithExerciceIdSchema = workoutSchema.extend({
+  workoutExercice: workoutExerciceSchema
+    .extend({ exerciceId: exerciceIdSchema })
+    .array(),
+});
+export type WorkoutWithExerciceId = z.infer<typeof workoutWithExerciceIdSchema>;
 
 export const workoutWithExerciceSchema = workoutSchema.extend({
-  _count: z.object({ workoutExercice: z.number().nonnegative() }),
   workoutExercice: workoutExerciceSchema
     .extend({ exercice: exerciceSchema })
     .array(),
 });
-export type WorkoutWithExercice = z.infer<typeof workoutWithExerciceSchema>;
+export const workoutWithExerciceWithMetaSchema =
+  workoutWithExerciceSchema.extend({
+    _count: z.object({ workoutExercice: z.number().nonnegative() }),
+  });
+export type WorkoutWithExerciceWithMeta = z.infer<
+  typeof workoutWithExerciceWithMetaSchema
+>;

@@ -1,5 +1,5 @@
-export const getTotalDuration = (array: { duration?: number }[]) => {
-  return array.reduce((acc, { duration }) => acc + (duration ?? 0), 0);
+export const getTotalDuration = (array: number[]) => {
+  return array.reduce((acc, duration) => acc + (duration ?? 0), 0);
 };
 
 export const formatDuration = (duration: number) => {

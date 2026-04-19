@@ -4,7 +4,7 @@ import { CardExercice } from "@/app/(connected)/search/_components/CardExercice"
 import { Button } from "@/components/ui/button";
 import { apiPatch } from "@/lib/api.client";
 import { WorkoutExercice } from "@/types/workoutExercices.schema";
-import { WorkoutWithExercice } from "@/types/workouts.schema";
+import { WorkoutWithExerciceWithMeta } from "@/types/workouts.schema";
 import { Edit, SaveIcon, XIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export const WorkoutDetails = ({
   date: defaultDate,
   workoutExercice: defaultWorkoutExercice,
   id,
-}: WorkoutWithExercice) => {
+}: WorkoutWithExerciceWithMeta) => {
   const { data: session } = useSession();
 
   const [exercices, setExercices] = useState(defaultWorkoutExercice);
