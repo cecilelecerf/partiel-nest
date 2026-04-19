@@ -23,13 +23,13 @@ export class WorkoutsController {
   }
 
   @Get()
-  findAll() {
-    return this.workoutsService.findAllWithMeta();
+  findAll(@GetMe() user: User) {
+    return this.workoutsService.findAllWithMeta(user.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.workoutsService.findOne(+id);
+  findOne(@Param('id') id: string, @GetMe() user: User) {
+    return this.workoutsService.findOne(+id, user.id);
   }
 
   @Patch(':id')

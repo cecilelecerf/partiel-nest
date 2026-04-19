@@ -22,7 +22,7 @@ export class AuthService {
     return randomInt(100000, 999999).toString();
   }
   async signIn({ email, password }: LoginUserDto): Promise<any> {
-    const user = await this.usersService.findOne(email);
+    const user = await this.usersService.findOneWithEmail(email);
     if (!user) throw new UnauthorizedException();
     if (!user.isVerifiedEmail) throw new UnauthorizedException();
     const correctPassword = await compare(password, user.password);
@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   async registry({ email, name, password }: CreateUserDto) {
-    const user = await this.usersService.findOne(email);
+    const user = await this.usersService.findOneWithEmail(email);
     if (user) throw new UnauthorizedException();
     const hashPass = await hash(password, 10);
     await this.usersService.registry({ email, name, password: hashPass });
@@ -75,7 +75,7 @@ export class AuthService {
   async verifyEmail({ token }: VerifyEmailDto) {
     const { email } = await this.jwtService.verifyAsync<JwtPayload>(token);
     if (!email) throw new UnauthorizedException();
-    const user = await this.usersService.findOne(email);
+    const user = await this.usersService.findOneWithEmail(email);
     if (!user) throw new UnauthorizedException();
     await this.usersService.verifyEmail({ email });
     return { message: 'Inscription validée' };

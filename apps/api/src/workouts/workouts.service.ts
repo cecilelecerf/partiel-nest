@@ -25,8 +25,9 @@ export class WorkoutsService {
   findAll() {
     return this.prisma.workout.findMany();
   }
-  findAllWithMeta() {
+  findAllWithMeta(userId: User['id']) {
     return this.prisma.workout.findMany({
+      where: { userId },
       include: {
         _count: { select: { workoutExercise: true } },
         workoutExercise: {
@@ -39,9 +40,9 @@ export class WorkoutsService {
     });
   }
 
-  async findOne(id: Workout['id']) {
+  async findOne(id: Workout['id'], userId: User['id']) {
     return this.prisma.workout.findUnique({
-      where: { id },
+      where: { id, userId },
       include: {
         workoutExercise: { include: { exercise: true } },
         _count: { select: { workoutExercise: true } },

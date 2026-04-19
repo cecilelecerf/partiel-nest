@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Public } from '../auth/decorators/public.decorator';
 import { GetMe } from '../auth/decorators/get-me.decorator';
-import type { User } from '../generated/prisma/client';
+import { UserRole, type User } from '../generated/prisma/client';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  @Public()
+  @Roles(UserRole.ADMIN)
   @Get()
   findAll() {
     return this.usersService.findAll();
@@ -16,5 +17,15 @@ export class UsersController {
   @Get('me/stats')
   getStats(@GetMe() user: User) {
     return this.usersService.getStats(user.id);
+  }
+  @Roles(UserRole.ADMIN)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+  @Roles(UserRole.ADMIN)
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
   }
 }

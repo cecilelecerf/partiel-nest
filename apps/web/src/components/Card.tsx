@@ -9,6 +9,7 @@ export const CardWrapper = ({
   children,
   interactive,
   selected,
+  className,
   ...props
 }: CardWrapperProps) => (
   <div
@@ -17,6 +18,7 @@ export const CardWrapper = ({
       interactive &&
         "hover:scale-[1.02] hover:shadow-lg active:translate-y-0.5 cursor-pointer",
       selected && "bg-secondary ring-2 ring-primary/20",
+      className,
     )}
     {...props}
   >
