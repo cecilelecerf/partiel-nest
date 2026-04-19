@@ -8,17 +8,12 @@ import { apiPost } from "@/lib/api.client";
 import { CardExercice } from "../../search/_components/CardExercice";
 import {
   WorkoutExercice,
-  workoutExerciceSchema,
   WorkoutExerciceTest,
 } from "@/types/workoutExercices.schema";
 import { Button } from "@/components/ui/button";
 import { SaveIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import {
-  workoutSchema,
-  workoutWithExerciceIdSchema,
-  workoutWithExerciceWithMetaSchema,
-} from "@/types/workouts.schema";
+import { workoutWithExerciceIdSchema } from "@/types/workouts.schema";
 
 export default function DraftWorkout() {
   const router = useRouter();
@@ -98,8 +93,9 @@ export default function DraftWorkout() {
           <CardExercice
             key={exercice.id}
             {...exercice}
-            workoutExercice={{ reps: 0 }}
+            workoutExercice={{}}
             onChangeWorkoutExercice={(data) => handleChange(exercice.id, data)}
+            draft={{ button: true }}
           />
         ))}
       </div>

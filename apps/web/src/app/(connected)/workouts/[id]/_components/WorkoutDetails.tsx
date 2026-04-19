@@ -69,7 +69,7 @@ export const WorkoutDetails = ({
       </div>
       <div className="flex justify-center mt-4">
         <Button onClick={handleSave} size="lg" className="text-lg">
-          <SaveIcon /> Save
+          <SaveIcon /> Enregistré
         </Button>
       </div>
     </>

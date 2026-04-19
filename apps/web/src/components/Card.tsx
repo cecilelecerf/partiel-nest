@@ -1,16 +1,24 @@
-import { ReactNode } from "react";
+import { cn } from "@/lib/utils";
+import { ComponentProps, ReactNode } from "react";
+
+type CardWrapperProps = {
+  children: ReactNode;
+} & { interactive?: boolean; selected?: boolean } & ComponentProps<"div">;
 
 export const CardWrapper = ({
   children,
-  enabeldHover,
-  active,
-}: {
-  children: ReactNode;
-  enabeldHover?: boolean;
-  active?: boolean;
-}) => (
+  interactive,
+  selected,
+  ...props
+}: CardWrapperProps) => (
   <div
-    className={`shadow rounded-xl p-2 px-4 gap-4 ${!enabeldHover && "hover:scale-102 hover:shadow-lg active:translate-y-1"} transition ${active && "bg-gray-100"}`}
+    className={cn(
+      "rounded-xl p-4 shadow transition-all duration-200",
+      interactive &&
+        "hover:scale-[1.02] hover:shadow-lg active:translate-y-0.5 cursor-pointer",
+      selected && "bg-secondary ring-2 ring-primary/20",
+    )}
+    {...props}
   >
     {children}
   </div>

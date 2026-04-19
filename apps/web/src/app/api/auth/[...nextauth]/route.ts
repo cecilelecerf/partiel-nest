@@ -27,6 +27,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: data.user.id,
           email: data.user.email,
+          role: data.user.role,
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
         };
@@ -38,12 +39,21 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.accessToken = user.accessToken;
         token.refreshToken = user.refreshToken;
+        token.role = user.role;
+        token.id = Number(user.id);
       }
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
-      return session;
+      return {
+        ...session,
+        accessToken: token.accessToken,
+        user: {
+          ...session.user,
+          role: token.role,
+          id: token.id,
+        },
+      };
     },
   },
   session: { strategy: "jwt" },

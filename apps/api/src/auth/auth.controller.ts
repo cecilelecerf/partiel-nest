@@ -8,11 +8,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LoginUserDto } from 'src/users/dto/loginUser.dto';
-import { VerifyOtpDto } from 'src/auth/dto/verifyOtp.dto';
-import { CreateUserDto } from 'src/users/dto/createUser.dto';
 import { VerifyEmailDto } from './dto/verifyEmail.dto';
 import { Public } from './decorators/public.decorator';
+import { LoginUserDto } from '../users/dto/loginUser.dto';
+import { VerifyOtpDto } from './dto/verifyOtp.dto';
+import { CreateUserDto } from '../users/dto/createUser.dto';
 
 @Public()
 @Controller('auth')
