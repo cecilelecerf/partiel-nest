@@ -15,7 +15,7 @@ import {
   exerciseFormSchema,
 } from "@/types/exercises.schema";
 
-export default function TrainingForm({
+export default function ExerciseForm({
   defaultValues,
 }: {
   defaultValues?: Exercise;
@@ -23,7 +23,12 @@ export default function TrainingForm({
   const { data: session } = useSession();
   const router = useRouter();
 
-  const { register, handleSubmit, control } = useForm<TExerciseForm>({
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<TExerciseForm>({
     resolver: zodResolver(exerciseFormSchema),
     defaultValues: {
       secondaryMuscles: [],
@@ -63,6 +68,9 @@ export default function TrainingForm({
       <div className="space-y-2">
         <Label>Nom</Label>
         <Input {...register("name")} placeholder="Squat" />
+        {errors.name && (
+          <p className="text-xs text-destructive">{errors.name.message}</p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -71,11 +79,21 @@ export default function TrainingForm({
           {...register("description")}
           placeholder="Description de l'exercise..."
         />
+        {errors.description && (
+          <p className="text-xs text-destructive">
+            {errors.description.message}
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
         <Label>Groupe musculaire principal</Label>
         <Input {...register("muscleGroup")} placeholder="Jambes" />
+        {errors.muscleGroup && (
+          <p className="text-xs text-destructive">
+            {errors.muscleGroup.message}
+          </p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -105,6 +123,11 @@ export default function TrainingForm({
           >
             <Plus size={16} /> Ajouter un muscle
           </Button>
+          {errors.secondaryMuscles && (
+            <p className="text-xs text-destructive">
+              {errors.secondaryMuscles.message}
+            </p>
+          )}
         </div>
       </div>
 
@@ -119,6 +142,9 @@ export default function TrainingForm({
           <option value="MOBILITY">Mobilité</option>
           <option value="HYPERTROPHY">Hypertrophie</option>
         </select>
+        {errors.type && (
+          <p className="text-xs text-destructive">{errors.type.message}</p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -133,6 +159,9 @@ export default function TrainingForm({
           <option value="BODYWEIGHT">Poids du corps</option>
           <option value="KETTLEBELL">Kettlebell</option>
         </select>
+        {errors.equipment && (
+          <p className="text-xs text-destructive">{errors.equipment.message}</p>
+        )}
       </div>
 
       <div className="space-y-2">
@@ -140,8 +169,13 @@ export default function TrainingForm({
         <Input
           {...register("tutorialUrl")}
           placeholder="https://youtube.com/..."
-          type="url"
         />
+
+        {errors.tutorialUrl && (
+          <p className="text-xs text-destructive">
+            {errors.tutorialUrl.message}
+          </p>
+        )}
       </div>
 
       <div className="space-y-3">

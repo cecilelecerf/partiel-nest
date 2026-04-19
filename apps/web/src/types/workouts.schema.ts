@@ -1,6 +1,6 @@
 import z from "zod";
-import { workoutExerciseSchema } from "./workoutExercises.schema";
 import { exerciseIdSchema, exerciseSchema } from "./exercises.schema";
+import { workoutExerciseSchema } from "./workoutExercises.schema";
 
 export const workoutIdSchema = z.number().nonnegative().brand("workout");
 export const workoutSchema = z.object({

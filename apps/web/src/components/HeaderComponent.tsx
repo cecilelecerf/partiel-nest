@@ -19,7 +19,7 @@ const NavComponent = () => {
 
   return (
     <>
-      <LinkComponent label="Recherche" href="/search" />
+      <LinkComponent label="Recherche" href="/exercises" />
       <LinkComponent label="Mes entrainements" href="/workouts" />
       <div className="flex gap-2">
         <div className="relative">

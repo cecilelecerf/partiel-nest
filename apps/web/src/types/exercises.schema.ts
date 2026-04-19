@@ -16,13 +16,13 @@ const equipmentEnumSchema = z.enum([
 ]);
 export const exerciseSchema = z.object({
   id: exerciseIdSchema,
-  name: z.string(),
+  name: z.string().min(1, "Le nom est requis"),
   description: z.string().optional(),
-  muscleGroup: z.string(),
+  muscleGroup: z.string().min(1, "Le groupe musculaire est requis"),
   secondaryMuscles: z.array(z.string()),
   type: exerciseTypeEnumSchema,
   equipment: equipmentEnumSchema,
-  tutorialUrl: z.url().nullable().optional(),
+  tutorialUrl: z.url().optional().or(z.literal("")).nullish(),
 });
 export type Exercise = z.infer<typeof exerciseSchema>;
 

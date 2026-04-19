@@ -1,6 +1,6 @@
 import { apiGet } from "@/lib/api.server";
 import { Exercise, exerciseSchema } from "@/types/exercises.schema";
-import TrainingForm from "../_components/TrainingForm";
+import ExerciseForm from "../_components/ExerciseForm";
 
 export default async function AdminExercisePage({
   params,
@@ -12,5 +12,5 @@ export default async function AdminExercisePage({
     exerciseSchema.parse(data),
   );
 
-  return <TrainingForm defaultValues={exercise} />;
+  return <ExerciseForm defaultValues={exercise} />;
 }
