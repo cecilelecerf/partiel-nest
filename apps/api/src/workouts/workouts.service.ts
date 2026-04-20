@@ -37,6 +37,7 @@ export class WorkoutsService {
           },
         },
       },
+      orderBy: { date: 'asc' },
     });
   }
 

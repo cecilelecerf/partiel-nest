@@ -7,7 +7,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
   findAll() {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany({ orderBy: { email: 'asc' } });
   }
   findOne(id: User['id']) {
     return this.prisma.user.findUnique({ where: { id } });

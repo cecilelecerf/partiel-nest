@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
@@ -13,6 +14,7 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../generated/prisma/enums';
 import { FindByIdsDto } from './dto/find-by-ids.dto';
+import { Exercise } from '../generated/prisma/client';
 
 @Controller('exercises')
 export class ExercisesController {
@@ -25,8 +27,18 @@ export class ExercisesController {
   }
 
   @Get()
-  findAll() {
-    return this.exercisesService.findAll();
+  findAll(
+    @Query('name') name?: Exercise['name'],
+    @Query('muscleGroup') muscleGroup?: Exercise['muscleGroup'],
+    @Query('equipment') equipment?: Exercise['equipment'],
+    @Query('type') type?: Exercise['type'],
+  ) {
+    return this.exercisesService.findAll({
+      name,
+      muscleGroup,
+      equipment,
+      type,
+    });
   }
 
   @Post('by-ids')

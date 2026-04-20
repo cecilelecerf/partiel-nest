@@ -53,7 +53,7 @@ export const HeaderComponent = () => {
   const { data: session } = useSession();
 
   return (
-    <header className="flex justify-between bg-gray-50/20 p-5 backdrop-blur-xl sticky top-0">
+    <header className="flex justify-between bg-gray-50/20 p-5 backdrop-blur-xl sticky top-0 z-20">
       <h1 className="font-bold">
         <Link href="/">Gestion exercises</Link>
       </h1>
