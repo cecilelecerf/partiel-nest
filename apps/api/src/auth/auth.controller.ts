@@ -30,7 +30,7 @@ export class AuthController {
     return this.authService.verifyOtp({ ...verifyInDto });
   }
 
-  @Post('registry')
+  @Post('register')
   registry(
     @Body()
     registryInDto: CreateUserDto,
@@ -39,7 +39,7 @@ export class AuthController {
   }
 
   @Get('verify-email')
-  verifyEmail(@Query('token') token: VerifyEmailDto) {
-    return this.authService.verifyEmail({ ...token });
+  verifyEmail(@Query() verifyEmailDto: VerifyEmailDto) {
+    return this.authService.verifyEmail({ token: verifyEmailDto.token });
   }
 }

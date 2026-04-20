@@ -42,7 +42,7 @@ const NavComponent = () => {
         </>
       )}
 
-      <Button onClick={() => signOut()}>Déconnexion</Button>
+      <Button onClick={() => signOut({ callbackUrl: "/" })}>Déconnexion</Button>
     </>
   );
 };
@@ -55,7 +55,7 @@ export const HeaderComponent = () => {
   return (
     <header className="flex justify-between bg-gray-50/20 p-5 backdrop-blur-xl sticky top-0 z-20">
       <h1 className="font-bold">
-        <Link href="/">Gestion exercises</Link>
+        <Link href="/">FitTrack</Link>
       </h1>
       <nav className={`${navClassName} flex`}>
         {session ? (
@@ -83,8 +83,10 @@ export const HeaderComponent = () => {
           </>
         ) : (
           <>
-            <LinkComponent label="Accueil" href="/" />
             <Button variant="secondary" asChild>
+              <Link href="/auth/register">Inscription</Link>
+            </Button>
+            <Button asChild>
               <Link href="/auth/login">Connexion</Link>
             </Button>
           </>

@@ -14,7 +14,7 @@ export class MailService {
   }
 
   async sendVerificationEmail(email: string, token: string) {
-    const url = `${process.env.APP_URL}/auth/verify-email?token=${token}`;
+    const url = `http://${process.env.APP_URL}/auth/verify-email?token=${token}`;
     await this.mailer.sendMail({
       to: email,
       subject: 'Vérifie ton email',
@@ -23,7 +23,7 @@ export class MailService {
   }
 
   async sendPasswordReset(email: string, token: string) {
-    const url = `${process.env.APP_URL}/auth/reset-password?token=${token}`;
+    const url = `http://${process.env.APP_URL}/auth/reset-password?token=${token}`;
     await this.mailer.sendMail({
       to: email,
       subject: 'Réinitialisation de ton mot de passe',

@@ -46,7 +46,10 @@ export default function ProfilPage() {
         </div>
       )}
 
-      <Button variant="destructive" onClick={() => signOut()}>
+      <Button
+        variant="destructive"
+        onClick={() => signOut({ callbackUrl: "/" })}
+      >
         Déconnexion
       </Button>
     </div>

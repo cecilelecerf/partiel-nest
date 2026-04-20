@@ -61,7 +61,8 @@ export class AuthService {
     };
   }
 
-  async registry({ email, name, password }: CreateUserDto) {
+  async registry({ email, name, password, confirmPassword }: CreateUserDto) {
+    if (password !== confirmPassword) throw new UnauthorizedException();
     const user = await this.usersService.findOneWithEmail(email);
     if (user) throw new UnauthorizedException();
     const hashPass = await hash(password, 10);

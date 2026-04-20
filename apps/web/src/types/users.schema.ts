@@ -9,5 +9,6 @@ export const userSchema = z.object({
   role: userRoleSchema,
   createdAt: z.coerce.date(),
   updatedAt: z.coerce.date(),
+  password: z.string().min(8, "8 caractères minimum"),
 });
 export type User = z.infer<typeof userSchema>;

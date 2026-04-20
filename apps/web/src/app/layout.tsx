@@ -5,7 +5,10 @@ import { cn } from "@/lib/utils";
 import { Providers } from "@/components/providers";
 import { HeaderComponent } from "@/components/HeaderComponent";
 
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +37,10 @@ export default function RootLayout({
       >
         <Providers>
           <HeaderComponent />
-          <main className="p-5 w-full">
-            {children}
-          </main>
+          <main className="p-5 w-full">{children}</main>
+          <footer className="border-t px-6 py-4 text-center text-xs text-muted-foreground">
+            Partiel Nest — NestJS + Next.js
+          </footer>
         </Providers>
       </body>
     </html>
