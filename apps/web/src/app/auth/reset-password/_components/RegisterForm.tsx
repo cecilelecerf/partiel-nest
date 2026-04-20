@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,10 +7,9 @@ import { apiPost } from "@/lib/api.client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MailIcon, SaveIcon } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { userSchema } from "@/types/users.schema";
 import z from "zod";
-import { useState } from "react";
 
 const userFormSchema = userSchema
   .pick({

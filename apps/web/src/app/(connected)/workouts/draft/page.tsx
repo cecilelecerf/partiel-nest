@@ -95,7 +95,7 @@ export default function DraftWorkout() {
             {...exercise}
             workoutExercise={{}}
             onChangeWorkoutExercise={(data) => handleChange(exercise.id, data)}
-            draft={{ button: true }}
+            draft
           />
         ))}
       </div>

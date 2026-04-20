@@ -7,16 +7,13 @@ import { Plus, XIcon } from "lucide-react";
 import { WorkoutExerciseForm } from "./WorkoutExercise";
 import { WorkoutExercise as TWorkoutExercise } from "@/types/workoutExercises.schema";
 import { useWorkoutDraft } from "@/stores/useWorkoutDraft";
-type DraftOptions = {
-  button?: boolean;
-  card?: boolean;
-};
+import { EQUIPMENT_LABELS, TYPE_LABELS } from "../[id]/page";
 
 type CardExerciseProps = Exercise & {
   resume?: boolean;
-  draft?: DraftOptions;
+  draft?: boolean;
   interactive?: boolean;
-
+  onCardClick?: () => void;
   workoutExercise?: Partial<TWorkoutExercise>;
   onChangeWorkoutExercise?: (data: Partial<TWorkoutExercise>) => void;
 };
@@ -34,21 +31,22 @@ export const CardExercise = ({
   equipment,
   workoutExercise,
   onChangeWorkoutExercise,
+  onCardClick,
 }: CardExerciseProps) => {
   const { toggle, ids } = useWorkoutDraft();
   const isSelected = ids.includes(id as ExerciseId);
 
   return (
     <CardWrapper
-      interactive={draft?.card || interactive}
-      selected={isSelected && draft?.card}
-      onClick={() => draft?.card && toggle(id as ExerciseId)}
+      interactive={interactive || !!onCardClick}
+      selected={isSelected && draft}
+      onClick={onCardClick}
     >
       <div className="flex flex-col justify-between gap-2 h-full">
         <div>
           <div className="flex justify-between">
             <p className="font-bold text-lg">{name}</p>
-            <Badge variant="secondary">{type}</Badge>
+            <Badge variant="secondary">{TYPE_LABELS[type]}</Badge>
           </div>
           {!resume && <p className="text-sm">{description}</p>}
         </div>
@@ -67,8 +65,10 @@ export const CardExercise = ({
           )}
           {!resume && (
             <div className="flex justify-between border-t pt-2 items-center">
-              <p className="text-xs">Équipement requis : {equipment}</p>
-              {draft?.button && (
+              <p className="text-xs">
+                Équipement: {EQUIPMENT_LABELS[equipment]}
+              </p>
+              {draft && (
                 <DraftButton
                   isSelected={isSelected}
                   onToggle={() => toggle(id as ExerciseId)}
