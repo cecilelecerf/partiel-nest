@@ -6,7 +6,17 @@ import { User } from '../generated/prisma/client';
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
   findAll() {
-    return this.prisma.user.findMany({ orderBy: { email: 'asc' } });
+    return this.prisma.user.findMany({
+      orderBy: { email: 'asc' },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        isVerifiedEmail: true,
+        createdAt: true,
+      },
+    });
   }
   async findOne(id: User['id']) {
     const user = await this.prisma.user.findUnique({ where: { id } });
@@ -20,9 +30,7 @@ export class UsersService {
     return this.prisma.user.update({ where: { id }, data: updateUserDto });
   }
   async findOneWithEmail(email: User['email']) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
-    if (!user) throw new NotFoundException();
-    return user;
+    return this.prisma.user.findUnique({ where: { email } });
   }
 
   saveOtp(
@@ -66,19 +74,23 @@ export class UsersService {
     totalDuration: number;
     uniqueExercises: number;
   }> {
-    const workouts = await this.prisma.workout.findMany({
+    const totalWorkouts = await this.prisma.workout.count({
       where: { userId },
-      include: { workoutExercise: true },
+    });
+    const totalDuration = await this.prisma.workoutExercise.aggregate({
+      where: { workout: { userId } },
+      _sum: { duration: true },
+    });
+    const uniqueExercises = await this.prisma.workoutExercise.findMany({
+      where: { workout: { userId } },
+      select: { exerciseId: true },
+      distinct: ['exerciseId'],
     });
 
-    const totalWorkouts = workouts.length;
-    const totalDuration: number = workouts
-      .flatMap((w) => w.workoutExercise)
-      .reduce((acc, we) => acc + (we.duration !== null ? we.duration : 0), 0);
-    const uniqueExercises = new Set(
-      workouts.flatMap((w) => w.workoutExercise.map((we) => we.exerciseId)),
-    ).size;
-
-    return { totalWorkouts, totalDuration, uniqueExercises };
+    return {
+      totalWorkouts,
+      totalDuration: totalDuration._sum.duration ?? 0,
+      uniqueExercises: uniqueExercises.length,
+    };
   }
 }

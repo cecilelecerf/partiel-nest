@@ -2,11 +2,12 @@
 
 import { CardExercise } from "@/app/(connected)/exercises/_components/CardExercise";
 import { Button } from "@/components/ui/button";
-import { apiPatch } from "@/lib/api.client";
+import { apiDelete, apiPatch } from "@/lib/api.client";
 import { WorkoutExercise } from "@/types/workoutExercises.schema";
 import { WorkoutWithExerciseWithMeta } from "@/types/workouts.schema";
-import { Edit, SaveIcon, XIcon } from "lucide-react";
+import { Edit, SaveIcon, TrashIcon, XIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const WorkoutDetails = ({
@@ -15,7 +16,7 @@ export const WorkoutDetails = ({
   id,
 }: WorkoutWithExerciseWithMeta) => {
   const { data: session } = useSession();
-
+  const router = useRouter();
   const [exercises, setExercises] = useState(defaultWorkoutExercise);
   const [date, setDate] = useState<Date>(defaultDate);
   const [isEditingDate, setIsEditingDate] = useState(false);
@@ -28,6 +29,12 @@ export const WorkoutDetails = ({
   const handleSave = async () => {
     if (!session?.accessToken) return;
     await apiPatch(`/workouts/${id}`, { date, exercises }, session.accessToken);
+  };
+
+  const handleDelete = async () => {
+    if (!session?.accessToken) return;
+    await apiDelete(`/workouts/${id}`, session?.accessToken);
+    router.push("/workouts");
   };
   return (
     <>
@@ -49,13 +56,18 @@ export const WorkoutDetails = ({
             {date.toLocaleDateString("fr-FR", { dateStyle: "full" })}
           </h1>
         )}
-        <Button
-          size="icon"
-          onClick={() => setIsEditingDate((prev) => !prev)}
-          onMouseDown={(e) => e.preventDefault()}
-        >
-          {isEditingDate ? <XIcon /> : <Edit />}
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            size="icon"
+            onClick={() => setIsEditingDate((prev) => !prev)}
+            onMouseDown={(e) => e.preventDefault()}
+          >
+            {isEditingDate ? <XIcon /> : <Edit />}
+          </Button>
+          <Button size="icon" variant="destructive" onClick={handleDelete}>
+            <TrashIcon />
+          </Button>
+        </div>
       </div>
       <div className="space-y-12">
         {exercises.map((we) => (

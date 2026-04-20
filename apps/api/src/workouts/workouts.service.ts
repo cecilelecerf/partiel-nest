@@ -58,16 +58,18 @@ export class WorkoutsService {
       where: { id },
       data: {
         date: updateWorkoutDto.date,
-        workoutExercise: {
-          update: updateWorkoutDto.exercises.map((workoutExercise) => ({
-            where: { id: workoutExercise.id },
-            data: {
-              sets: workoutExercise.sets,
-              reps: workoutExercise.reps,
-              duration: workoutExercise.duration,
-            },
-          })),
-        },
+        ...(updateWorkoutDto.exercises?.length && {
+          workoutExercise: {
+            update: updateWorkoutDto.exercises.map((workoutExercise) => ({
+              where: { id: workoutExercise.id },
+              data: {
+                sets: workoutExercise.sets,
+                reps: workoutExercise.reps,
+                duration: workoutExercise.duration,
+              },
+            })),
+          },
+        }),
       },
       include: {
         workoutExercise: true,
