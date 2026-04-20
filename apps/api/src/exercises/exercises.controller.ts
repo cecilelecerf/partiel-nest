@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
@@ -47,22 +48,22 @@ export class ExercisesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exercisesService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.exercisesService.findOne(id);
   }
 
   @Roles(UserRole.ADMIN)
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateExerciseDto: UpdateExerciseDto,
   ) {
-    return this.exercisesService.update(+id, updateExerciseDto);
+    return this.exercisesService.update(id, updateExerciseDto);
   }
 
   @Roles(UserRole.ADMIN)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.exercisesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.exercisesService.remove(id);
   }
 }

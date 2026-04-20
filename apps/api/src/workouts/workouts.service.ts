@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -42,13 +42,15 @@ export class WorkoutsService {
   }
 
   async findOne(id: Workout['id'], userId: User['id']) {
-    return this.prisma.workout.findUnique({
+    const workout = await this.prisma.workout.findUnique({
       where: { id, userId },
       include: {
         workoutExercise: { include: { exercise: true } },
         _count: { select: { workoutExercise: true } },
       },
     });
+    if (!workout) throw new NotFoundException();
+    return workout;
   }
 
   update(id: Workout['id'], updateWorkoutDto: UpdateWorkoutDto) {

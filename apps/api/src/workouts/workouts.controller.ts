@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { WorkoutsService } from './workouts.service';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
@@ -28,17 +29,20 @@ export class WorkoutsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @GetMe() user: User) {
-    return this.workoutsService.findOne(+id, user.id);
+  findOne(@Param('id', ParseIntPipe) id: number, @GetMe() user: User) {
+    return this.workoutsService.findOne(id, user.id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWorkoutDto: UpdateWorkoutDto) {
-    return this.workoutsService.update(+id, updateWorkoutDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateWorkoutDto: UpdateWorkoutDto,
+  ) {
+    return this.workoutsService.update(id, updateWorkoutDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.workoutsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.workoutsService.remove(id);
   }
 }

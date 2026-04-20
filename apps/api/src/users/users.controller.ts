@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { GetMe } from '../auth/decorators/get-me.decorator';
 import { UserRole, type User } from '../generated/prisma/client';
@@ -20,12 +27,15 @@ export class UsersController {
   }
   @Roles(UserRole.ADMIN)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.findOne(id);
   }
   @Roles(UserRole.ADMIN)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    return this.usersService.update(id, updateUserDto);
   }
 }

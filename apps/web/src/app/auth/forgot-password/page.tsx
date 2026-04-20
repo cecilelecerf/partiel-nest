@@ -1,17 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { apiPost } from "@/lib/api.client";
-import Link from "next/link";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -21,9 +17,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await apiPost("/auth/login", { email, password });
-      sessionStorage.setItem("otp_email", email);
-      router.push("/auth/verify");
+      await apiPost("/auth/forgot-password", { email });
     } catch {
       setError("Identifiants incorrects.");
     } finally {
@@ -37,7 +31,7 @@ export default function LoginPage() {
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold tracking-tight">Connexion</h1>
           <p className="text-sm text-muted-foreground">
-            Entrez vos identifiants pour continuer
+            Entrez vos emails pour recevoir un mail
           </p>
         </div>
 
@@ -54,30 +48,12 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Mot de passe</Label>
-              <Link
-                href="/auth/forgot-password"
-                className="text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors"
-              >
-                Mot de passe oublié ?
-              </Link>
-            </div>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
           {error && <p className="text-sm text-destructive">{error}</p>}
 
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Connexion..." : "Se connecter"}
+            {loading
+              ? "Email en cours d'envoie..."
+              : "Réinitialisé mon mot de passe"}
           </Button>
         </form>
       </div>

@@ -8,11 +8,13 @@ import {
   Query,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { VerifyEmailDto } from './dto/verifyEmail.dto';
+import { VerifyTokenDto } from './dto/verifyEmail.dto';
 import { Public } from './decorators/public.decorator';
 import { LoginUserDto } from '../users/dto/loginUser.dto';
-import { VerifyOtpDto } from './dto/verifyOtp.dto';
-import { CreateUserDto } from '../users/dto/createUser.dto';
+import { RegisterUserDto } from './dto/registerUser.dto';
+import { VerifyLoginOtpDto as VerifyLoginDto } from './dto/verifyLoginOtp.dto';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
+import { ForgotPasswordDto } from './dto/forgotPassword.dto';
 
 @Public()
 @Controller('auth')
@@ -22,24 +24,40 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   signIn(@Body() signInDto: LoginUserDto) {
-    return this.authService.signIn({ ...signInDto });
+    return this.authService.signIn(signInDto);
   }
 
   @Post('verify')
-  verify(@Body() verifyInDto: VerifyOtpDto) {
-    return this.authService.verifyOtp({ ...verifyInDto });
+  verify(@Body() verifyInDto: VerifyLoginDto) {
+    return this.authService.verifyLogin(verifyInDto);
   }
 
   @Post('register')
   registry(
     @Body()
-    registryInDto: CreateUserDto,
+    registryInDto: RegisterUserDto,
   ) {
-    return this.authService.registry({ ...registryInDto });
+    return this.authService.registry(registryInDto);
   }
 
   @Get('verify-email')
-  verifyEmail(@Query() verifyEmailDto: VerifyEmailDto) {
-    return this.authService.verifyEmail({ token: verifyEmailDto.token });
+  verifyEmail(@Query() verifyTokenDto: VerifyTokenDto) {
+    return this.authService.verifyEmailRegister({
+      token: verifyTokenDto.token,
+    });
+  }
+  @Post('forgot-password')
+  forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto);
+  }
+  @Post('reset-password')
+  resetPassword(
+    @Query() verifyTokenDto: VerifyTokenDto,
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ) {
+    return this.authService.resetPassword({
+      ...resetPasswordDto,
+      ...verifyTokenDto,
+    });
   }
 }
