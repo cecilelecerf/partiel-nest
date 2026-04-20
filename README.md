@@ -71,7 +71,10 @@ JWT_REFRESH_SECRET=changeme
 docker compose up -d
 
 # Appliquer les migrations Prisma
-pnpm --filter api prisma migrate dev
+pnpm --filter api prisma:migrate
+
+# Générer les fichiers Prisma
+pnpm --filter api prisma:generate
 
 # Seed de la base de données
 pnpm db:seed
