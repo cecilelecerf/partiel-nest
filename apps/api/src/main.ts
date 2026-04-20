@@ -10,7 +10,6 @@ async function bootstrap() {
     .setDescription(
       'API de suivi fitness — gestion des exercices, workouts et utilisateurs',
     )
-    .setVersion('1.0')
     .addBearerAuth(
       {
         type: 'http',
@@ -27,4 +26,4 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+void bootstrap();

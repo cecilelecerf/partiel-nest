@@ -2,11 +2,14 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "scripts": { 
+  "scripts": {
     "dev:web": "pnpm --filter web dev",
-    "dev:api": "pnpm --filter api start:dev", 
+    "dev:api": "pnpm --filter api start:dev",
     "db:seed": "pnpm --filter api seed",
-    "dev": "pnpm dev:web & pnpm dev:api"
+    "dev": "pnpm dev:web & pnpm dev:api",
+    "build": "pnpm --filter web build & pnpm --filter api build",
+    "prod": "pnpm --filter web start & pnpm --filter api start:prod",
+    "lint": "pnpm --filter web lint & pnpm --filter api lint"
   },
   "workspaces": [
     "apps/*",

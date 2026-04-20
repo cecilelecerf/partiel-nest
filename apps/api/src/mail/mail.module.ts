@@ -10,7 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         transport: {
-          host: config.get('SMTP_HOST'),
+          host: config.get<string>('SMTP_HOST'),
           port: config.get<number>('SMTP_PORT'),
         },
         defaults: {
