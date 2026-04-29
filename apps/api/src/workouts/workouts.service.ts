@@ -2,13 +2,27 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { User, Workout } from '../generated/prisma/client';
+import { Exercise, User, Workout } from '../generated/prisma/client';
 
 @Injectable()
 export class WorkoutsService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createWorkoutDto: CreateWorkoutDto, userId: User['id']) {
+    const exerciceIds: Exercise['id'][] = createWorkoutDto.exercises.map(
+      (exercice) => exercice.exerciseId,
+    );
+
+    const exercises = await this.prisma.exercise.findMany({
+      where: { id: { in: exerciceIds } },
+    });
+    if (exercises.length !== exerciceIds.length) {
+      const foundIds = exercises.map(({ id }) => id);
+      const missingIds = exerciceIds.filter((id) => !foundIds.includes(id));
+      throw new NotFoundException(
+        `Exercises not found: ${missingIds.join(', ')}`,
+      );
+    }
     return this.prisma.workout.create({
       data: {
         userId,
@@ -53,24 +67,37 @@ export class WorkoutsService {
     return workout;
   }
 
-  update(id: Workout['id'], updateWorkoutDto: UpdateWorkoutDto) {
+  async update(id: Workout['id'], updateWorkoutDto: UpdateWorkoutDto) {
+    if (updateWorkoutDto.exercises?.length > 0) {
+      await Promise.all(
+        updateWorkoutDto.exercises.map((workoutExercice) =>
+          this.prisma.workoutExercise.upsert({
+            where: { id: workoutExercice.id ?? -1 },
+            update: {
+              sets: workoutExercice.sets,
+              reps: workoutExercice.reps,
+              duration: workoutExercice.duration,
+              exerciseId: workoutExercice.exerciseId,
+            },
+            create: {
+              workoutId: id,
+              sets: workoutExercice.sets,
+              reps: workoutExercice.reps,
+              duration: workoutExercice.duration,
+              exerciseId: workoutExercice.exerciseId,
+            },
+          }),
+        ),
+      );
+    } else {
+      await this.prisma.workoutExercise.deleteMany({
+        where: { workoutId: id },
+      });
+    }
+
     return this.prisma.workout.update({
       where: { id },
-      data: {
-        date: updateWorkoutDto.date,
-        ...(updateWorkoutDto.exercises?.length && {
-          workoutExercise: {
-            update: updateWorkoutDto.exercises.map((workoutExercise) => ({
-              where: { id: workoutExercise.id },
-              data: {
-                sets: workoutExercise.sets,
-                reps: workoutExercise.reps,
-                duration: workoutExercise.duration,
-              },
-            })),
-          },
-        }),
-      },
+      data: { date: updateWorkoutDto.date },
       include: {
         workoutExercise: true,
       },

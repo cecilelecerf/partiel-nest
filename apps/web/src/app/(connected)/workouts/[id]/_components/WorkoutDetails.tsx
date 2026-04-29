@@ -28,7 +28,19 @@ export const WorkoutDetails = ({
 
   const handleSave = async () => {
     if (!session?.accessToken) return;
-    await apiPatch(`/workouts/${id}`, { date, exercises }, session.accessToken);
+    await apiPatch(
+      `/workouts/${id}`,
+      {
+        date,
+        exercises: [
+          ...exercises.map((exercise) => ({
+            ...exercise,
+            exerciseId: exercise.id,
+          })),
+        ],
+      },
+      session.accessToken,
+    );
   };
 
   const handleDelete = async () => {

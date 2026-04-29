@@ -37,11 +37,9 @@ export const UserForm = () => {
   });
 
   const onSubmit = async (data: UserFormType) => {
-    console.log();
     await apiPost(`/auth/register`, data);
     setEmail(data.email);
   };
-  console.log(email);
   if (email) {
     return (
       <div className="flex flex-col items-center gap-4 text-center">

@@ -1,4 +1,3 @@
-import { OmitType } from '@nestjs/swagger';
 import { CreateWorkoutExerciseDto } from './create-workout.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -8,10 +7,7 @@ import {
   IsOptional,
   ValidateNested,
 } from 'class-validator';
-export class UpdateWorkoutExerciseDto extends OmitType(
-  CreateWorkoutExerciseDto,
-  ['exerciseId'],
-) {
+export class UpdateWorkoutExerciseDto extends CreateWorkoutExerciseDto {
   @ApiProperty({ example: 1 })
   @IsInt()
   id: number;
