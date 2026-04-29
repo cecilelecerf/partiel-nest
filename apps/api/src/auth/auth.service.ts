@@ -72,7 +72,7 @@ export class AuthService {
     await this.usersService.deleteOtp(user.id);
     return {
       access_token: await this.jwtService.signAsync(payload, {
-        expiresIn: '15m',
+        expiresIn: '45m',
       }),
       refresh_token: await this.jwtService.signAsync(payload, {
         expiresIn: '7d',
